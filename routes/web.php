@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuitAttemptController;
+use App\Http\Controllers\ReasonController;
 use App\Models\QuitAttempt;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     //resource routes
     Route::resource('quit-attempts', QuitAttemptController::class);
+    Route::resource('reasons', ReasonController::class);
 });

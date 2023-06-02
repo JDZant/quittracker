@@ -4,6 +4,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div class="mt-3">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                </div>
                 <div class="card mt-3">
                     <div class="card-header bg-gradient-blue">
                         <div class="d-flex justify-content-between">
@@ -18,22 +25,31 @@
                             <thead>
                             <tr>
                                 <th>{{ __('quit-attempts.table.start_date') }}</th>
-                                <th>{{ __('quit-attempts.table.end_date') }}</th>
+                                <th>{{ __('quit-attempts.table.reasons') }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($quitAttempts as $quitAttempt)
                                 <tr>
                                     <td>{{ $quitAttempt->start_date }}</td>
-                                    @if(is_null($quitAttempt->end_date))
-                                        <td>-</td>
+                                    @if($quitAttempt->reasons->isEmpty())
+                                        <td>
+                                            <span class="badge badge-danger">No reasons</span>
+                                        </td>
                                     @else
-                                        <td>{{ $quitAttempt->end_date }}</td>
+                                        <td>
+                                            @foreach ($quitAttempt->reasons as $reason)
+                                                <span class="badge badge-primary">{{ $reason->reason }}</span>
+                                            @endforeach
+                                        </td>
                                     @endif
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="d-flex mt-3">
+                            {{ $quitAttempts->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

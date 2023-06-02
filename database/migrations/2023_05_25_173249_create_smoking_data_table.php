@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('smoking_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('quit_attempt_id')->constrained('quit_attempts');
+            $table->foreignId('quit_attempt_id')
+                ->constrained('quit_attempts');
             $table->integer('cigarettes_per_day');
-            $table->integer('cigarettes_per_pack');
-            $table->integer('packs_per_day');
-            $table->integer('years_smoked');
-            $table->integer('cost_per_pack');
+            $table->double('cost_per_pack');
             $table->timestamps();
             $table->softDeletes();
         });

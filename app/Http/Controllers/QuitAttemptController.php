@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuitAttemptRequest;
 use App\Models\QuitAttempt;
+use App\Models\Reason;
+use App\Models\SmokingData;
 use Illuminate\Http\Request;
 
 class QuitAttemptController extends Controller
@@ -12,8 +15,10 @@ class QuitAttemptController extends Controller
      */
     public function index()
     {
-        return view('pages.quitAttempt.index', [
-            'quitAttempts' => QuitAttempt::all()
+        $quitAttempts = QuitAttempt::with('reasons')->paginate(10);
+
+        return view('pages.quit-attempt.index', [
+            'quitAttempts' => $quitAttempts
         ]);
     }
 
@@ -22,15 +27,30 @@ class QuitAttemptController extends Controller
      */
     public function create()
     {
-        return view('pages.quitAttempt.create');
+        return view('pages.quit-attempt.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(QuitAttemptRequest $request)
     {
-        dd('test');
+        $data = $request->validated();
+        $startDate = array_shift($data);
+        $quitAttempt = QuitAttempt::create(['start_date' => $startDate]);
+        $data['quit_attempt_id'] = $quitAttempt->id;
+        $this->storeSmokingData($data);
+
+        return redirect()->route('quit-attempts.index')
+            ->with('success', 'Quit Attempt created successfully');
+    }
+
+    private function storeSmokingData($data){
+        SmokingData::create($data);
+    }
+
+    private function storeReasons($data){
+        Reason::create($data);
     }
 
     /**
