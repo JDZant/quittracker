@@ -1,11 +1,12 @@
 <?php
 
 return [
-    'header' => 'Please add reasons for why you want to quit smoking',
+    'header' => 'Please add your motivation',
     'forms' => [
         'reason' => 'Reason',
     ],
     'buttons' => [
         'add' => 'Add',
+        'done' => 'Done'
     ],
 ];

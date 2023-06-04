@@ -27,6 +27,7 @@ class QuitAttemptController extends Controller
      */
     public function create()
     {
+
         return view('pages.quit-attempt.create');
     }
 
@@ -82,6 +83,9 @@ class QuitAttemptController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        QuitAttempt::findOrFail($id)->delete();
+
+        return redirect()->route('quit-attempts.index')->with('status', 'Deleted quit attempt');
     }
 }
+

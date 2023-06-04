@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mt-3">
-                <div class="card-header bg-gradient-blue">
+                <div class="card-header card-header">
                     <div class="d-flex justify-content-between">
                         <h4>{{ __('smoking-data.header') }}</h4>
                     </div>
@@ -95,7 +95,7 @@
 
                         <div class="form-group d-flex justify-content-end">
                             <button type="submit"
-                                    class="btn btn-primary">{{__('quit-attempts.buttons.save')}}</button>
+                                    class="btn form-button">{{__('quit-attempts.buttons.save')}}</button>
                         </div>
                     </form>
                 </div>

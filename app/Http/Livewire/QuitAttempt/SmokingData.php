@@ -42,8 +42,8 @@ class SmokingData extends Component
 
         //create smoking data
         SmokingDataModel::create($validatedData);
-
-        return $this->render();
+        $this->emit('set-has-data', true);
+        $this->emit('set-quit-attempt', $quitAttempt->id);
     }
 
     public function render()

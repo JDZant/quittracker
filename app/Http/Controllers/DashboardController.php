@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SmokingDataController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Reasons extends Component
 {
-    public $reasons = [];
+    public $quitAttemptId;
     public $reason;
 
     public function add(): void
@@ -15,23 +15,16 @@ class Reasons extends Component
         $validatedData = $this->validate([
             'reason' => 'required|string|max:255',
         ]);
-        $this->reasons[] = $validatedData['reason'];
-        $this->reason = null;
-    }
 
-    public function remove($index): void
-    {
-        unset($this->reasons[$index]);
-    }
+        $validatedData['quit_attempt_id'] = $this->quitAttemptId;
 
-    public function store()
-    {
-
+        Reason::create($validatedData);
     }
 
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('livewire.quit-attempt.reasons');
+        $reasons = Reason::whereQuitAttemptId($this->quitAttemptId)->get();
+        return view('livewire.quit-attempt.reasons', compact('reasons'));
     }
 }

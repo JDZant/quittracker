@@ -12,7 +12,7 @@
                     @endif
                 </div>
                 <div class="card mt-3">
-                    <div class="card-header bg-gradient-blue">
+                    <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h4>Quit Attempts</h4>
                             <a href="{{ route('quit-attempts.create') }}">
@@ -26,25 +26,45 @@
                             <tr>
                                 <th>{{ __('quit-attempts.table.start_date') }}</th>
                                 <th>{{ __('quit-attempts.table.reasons') }}</th>
+                                <th>{{ __('quit-attempts.table.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($quitAttempts as $quitAttempt)
+                            @if($quitAttempts->isEmpty())
                                 <tr>
-                                    <td>{{ $quitAttempt->start_date }}</td>
-                                    @if($quitAttempt->reasons->isEmpty())
-                                        <td>
-                                            <span class="badge badge-danger">No reasons</span>
-                                        </td>
-                                    @else
-                                        <td>
-                                            @foreach ($quitAttempt->reasons as $reason)
-                                                <span class="badge badge-primary">{{ $reason->reason }}</span>
-                                            @endforeach
-                                        </td>
-                                    @endif
+                                    <td>
+                                        <span>No results</span>
+                                    </td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($quitAttempts as $quitAttempt)
+                                    <tr>
+                                        <td>{{ $quitAttempt->start_date }}</td>
+                                        @if($quitAttempt->reasons->isEmpty())
+                                            <td>
+                                                <span class="badge" style="background-color: #403f3d; color:white;">No reasons</span>
+                                            </td>
+                                        @else
+                                            <td>
+                                                @foreach ($quitAttempt->reasons as $reason)
+                                                    <span class="badge badge-primary">{{ $reason->reason }}</span>
+                                                @endforeach
+                                            </td>
+                                        @endif
+                                        <td>
+                                            <form action="{{ route('quit-attempts.destroy', $quitAttempt) }}"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" style="border: none; background: none;">
+                                                    <i class="fas fa-trash" style="color: #403f3d;"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                         <div class="d-flex mt-3">

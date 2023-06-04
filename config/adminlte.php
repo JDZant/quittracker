@@ -290,12 +290,17 @@ return [
     */
 
     'menu' => [
-        ['header' => 'QUIT ATTEMPTS'],
+        [
+            'text' => 'Dashboard',
+            'url'  => 'dashboard',
+            'icon' => 'fas fa-fw fa-user',
+        ],
         [
             'text' => 'Quit attempts',
             'url'  => 'quit-attempts',
             'icon' => 'fas fa-fw fa-user',
         ],
+
 
     ],
 
