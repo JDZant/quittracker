@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CurrentAttemptController;
 use App\Http\Controllers\QuitAttemptController;
 use App\Http\Controllers\ReasonController;
 use App\Models\QuitAttempt;
@@ -25,8 +25,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
-
+    Route::get('/current-attempt', [CurrentAttemptController::class, 'index'])->name('current-attempt');
     //resource routes
     Route::resource('quit-attempts', QuitAttemptController::class);
     Route::resource('reasons', ReasonController::class);

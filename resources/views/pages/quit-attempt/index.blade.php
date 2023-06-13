@@ -14,7 +14,7 @@
                 <div class="card mt-3">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h4>Quit Attempts</h4>
+                            <h4>My attempts</h4>
                             <a href="{{ route('quit-attempts.create') }}">
                                 <i class="fas text-white fa-plus"></i>
                             </a>
@@ -25,6 +25,7 @@
                             <thead>
                             <tr>
                                 <th>{{ __('quit-attempts.table.start_date') }}</th>
+                                <th>{{ __('quit-attempts.table.end_date') }}</th>
                                 <th>{{ __('quit-attempts.table.reasons') }}</th>
                                 <th>{{ __('quit-attempts.table.actions') }}</th>
                             </tr>
@@ -39,7 +40,8 @@
                             @else
                                 @foreach ($quitAttempts as $quitAttempt)
                                     <tr>
-                                        <td>{{ $quitAttempt->start_date }}</td>
+                                        <td>{{ $quitAttempt->formatted_start_date }}</td>
+                                        <td class="text-danger">{{ $quitAttempt->formatted_end_date }}</td>
                                         @if($quitAttempt->reasons->isEmpty())
                                             <td>
                                                 <span class="badge" style="background-color: #403f3d; color:white;">No reasons</span>

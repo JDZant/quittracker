@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\QuitAttempt;
 
 //libraries
+use App\Models\Reason;
 use Carbon\Carbon;
 
 //livewire
@@ -20,8 +21,12 @@ class SmokingData extends Component
     public float $cost_per_pack;
     public float $nicotine_per_cigarette;
     public float $tar_per_cigarette;
+    public array $selectedReasons = [];
 
-    public function store(){
+    protected $listeners = ['reasonsUpdated' => 'updateReasons'];
+
+    public function store()
+    {
         $validatedData = $this->validate([
             'start_date' => 'required|date',
             'cigarettes_per_day' => 'required|integer|min:0',
@@ -44,6 +49,21 @@ class SmokingData extends Component
         SmokingDataModel::create($validatedData);
         $this->emit('set-has-data', true);
         $this->emit('set-quit-attempt', $quitAttempt->id);
+
+        //create reasons
+        foreach($this->selectedReasons as $reason){
+            Reason::create([
+                'reason' => $reason,
+                'quit_attempt_id' => $quitAttempt->id
+            ]);
+        }
+
+        return redirect()->route('quit-attempts.index')->with('status', 'Quit attempt added!');
+    }
+
+    public function updateReasons($selectedReasons): void
+    {
+        $this->selectedReasons = $selectedReasons;
     }
 
     public function render()

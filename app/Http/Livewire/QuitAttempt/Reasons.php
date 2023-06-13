@@ -7,24 +7,30 @@ use Livewire\Component;
 
 class Reasons extends Component
 {
-    public $quitAttemptId;
-    public $reason;
+    public array $selectedReasons = [''];
 
-    public function add(): void
+    protected $listeners = [
+        'updateComponent',
+        'getReasons'
+    ];
+
+    public function updatedSelectedReasons(): void
     {
-        $validatedData = $this->validate([
-            'reason' => 'required|string|max:255',
-        ]);
-
-        $validatedData['quit_attempt_id'] = $this->quitAttemptId;
-
-        Reason::create($validatedData);
+        $this->emit('reasonsUpdated', $this->selectedReasons);
     }
 
-
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
-    {
-        $reasons = Reason::whereQuitAttemptId($this->quitAttemptId)->get();
-        return view('livewire.quit-attempt.reasons', compact('reasons'));
+    public function updateComponent(){
+        $this->render();
     }
+
+    public function add(){
+        $this->selectedReasons[] = '';
+        $this->emit('updateComponent');
+    }
+
+    public function render()
+    {
+        return view('livewire.quit-attempt.reasons');
+    }
+
 }

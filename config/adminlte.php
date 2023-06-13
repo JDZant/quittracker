@@ -291,12 +291,12 @@ return [
 
     'menu' => [
         [
-            'text' => 'Dashboard',
-            'url'  => 'dashboard',
+            'text' => 'Current attempt',
+            'url'  => 'current-attempt',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'Quit attempts',
+            'text' => 'My attempts',
             'url'  => 'quit-attempts',
             'icon' => 'fas fa-fw fa-user',
         ],

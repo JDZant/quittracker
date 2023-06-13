@@ -6,7 +6,7 @@ return [
         'reason' => 'Reason',
     ],
     'buttons' => [
-        'add' => 'Add',
+        'add' => '+ Add reason',
         'done' => 'Done'
     ],
 ];

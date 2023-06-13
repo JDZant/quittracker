@@ -93,6 +93,10 @@
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            @livewire('quit-attempt.reasons')
+                        </div>
+
                         <div class="form-group d-flex justify-content-end">
                             <button type="submit"
                                     class="btn form-button">{{__('quit-attempts.buttons.save')}}</button>
