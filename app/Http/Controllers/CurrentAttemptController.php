@@ -45,7 +45,7 @@ class CurrentAttemptController extends Controller
             $moneyNotSpentOnCigarettesSince = null;
         }
 
-        return view('current-attempt', [
+        return view('pages.current-attempt.current-attempt', [
             'quitAttempts' => QuitAttempt::with('smokingData', 'reasons')->paginate(25),
             'activeAttempt' => $activeAttempt,
             'daysStopped' => $daysStopped,
@@ -58,9 +58,10 @@ class CurrentAttemptController extends Controller
     }
 
 
-    public function endCurrentAttempt(){
-        QuitAttempt::whereNull('end_date')->first()->update('end_date', now());
-        return redirect()->route('current-attempt.index');
+    public function endCurrentAttempt(QuitAttempt $attempt){
+        $attempt->end_date = Carbon::now();
+        $attempt->save();
+        return redirect()->back();
     }
 
 

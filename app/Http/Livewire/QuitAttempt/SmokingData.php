@@ -58,7 +58,7 @@ class SmokingData extends Component
             ]);
         }
 
-        return redirect()->route('quit-attempts.index')->with('status', 'Quit attempt added!');
+        return redirect()->route('current-attempt')->with('status', 'Quit attempt added!');
     }
 
     public function updateReasons($selectedReasons): void

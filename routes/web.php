@@ -26,7 +26,8 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/current-attempt', [CurrentAttemptController::class, 'index'])->name('current-attempt');
+    Route::put('/end-attempt/{attempt}', [CurrentAttemptController::class, 'endCurrentAttempt'])->name('current-attempt.end');
+
     //resource routes
     Route::resource('quit-attempts', QuitAttemptController::class);
-    Route::resource('reasons', ReasonController::class);
 });

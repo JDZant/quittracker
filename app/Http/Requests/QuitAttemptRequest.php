@@ -22,7 +22,7 @@ class QuitAttemptRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => 'required|date',
+            'start_date' => 'required|text',
             'cigarettes_per_day' => 'required|integer|min:0',
             'cost_per_pack' => 'required|numeric|min:0',
             'nicotine_per_cigarette' => 'required|numeric|min:0',

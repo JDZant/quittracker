@@ -32,9 +32,9 @@ class QuitAttempt extends Model
         return Carbon::parse($this->start_date)->format('d-m-Y');
     }
 
-    public function getFormattedEndDateAttribute(): string
+    public function getFormattedEndDateAttribute(): ?string
     {
-        return Carbon::parse($this->end_date)->format('d-m-Y');
+        return $this->end_date ? Carbon::parse($this->end_date)->format('d-m-Y') : null;
     }
 
 

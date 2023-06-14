@@ -16,9 +16,10 @@ class QuitAttemptController extends Controller
     public function index()
     {
         $quitAttempts = QuitAttempt::with('reasons')->paginate(10);
-
+        $activeAttempt = QuitAttempt::whereNull('end_date')->first();
         return view('pages.quit-attempt.index', [
-            'quitAttempts' => $quitAttempts
+            'quitAttempts' => $quitAttempts,
+            'activeAttempt' => $activeAttempt
         ]);
     }
 
@@ -87,5 +88,6 @@ class QuitAttemptController extends Controller
 
         return redirect()->route('quit-attempts.index')->with('status', 'Deleted quit attempt');
     }
+
 }
 

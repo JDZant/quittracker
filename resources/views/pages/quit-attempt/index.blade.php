@@ -1,77 +1,76 @@
 @extends('adminlte::page')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="mt-3">
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h4>My attempts</h4>
-                            <a href="{{ route('quit-attempts.create') }}">
-                                <i class="fas text-white fa-plus"></i>
-                            </a>
-                        </div>
+    <div class="row justify-content-start">
+        <div class="col-md-8">
+            <div class="mt-3">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
                     </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
+                @endif
+            </div>
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h4>My attempts</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>{{ __('quit-attempts.table.start_date') }}</th>
+                            <th>{{ __('quit-attempts.table.end_date') }}</th>
+                            <th>{{ __('quit-attempts.table.reasons') }}</th>
+                            <th>{{ __('quit-attempts.table.status') }}</th>
+                            {{--                      <th>{{ __('quit-attempts.table.actions') }}</th>--}}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($quitAttempts->isEmpty())
                             <tr>
-                                <th>{{ __('quit-attempts.table.start_date') }}</th>
-                                <th>{{ __('quit-attempts.table.end_date') }}</th>
-                                <th>{{ __('quit-attempts.table.reasons') }}</th>
-                                <th>{{ __('quit-attempts.table.actions') }}</th>
+                                <td>
+                                    <span>No results</span>
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            @if($quitAttempts->isEmpty())
+                        @else
+                            @foreach ($quitAttempts as $quitAttempt)
                                 <tr>
-                                    <td>
-                                        <span>No results</span>
-                                    </td>
-                                </tr>
-                            @else
-                                @foreach ($quitAttempts as $quitAttempt)
-                                    <tr>
-                                        <td>{{ $quitAttempt->formatted_start_date }}</td>
-                                        <td class="text-danger">{{ $quitAttempt->formatted_end_date }}</td>
-                                        @if($quitAttempt->reasons->isEmpty())
-                                            <td>
-                                                <span class="badge" style="background-color: #403f3d; color:white;">No reasons</span>
-                                            </td>
-                                        @else
-                                            <td>
-                                                @foreach ($quitAttempt->reasons as $reason)
-                                                    <span class="badge badge-primary">{{ $reason->reason }}</span>
-                                                @endforeach
-                                            </td>
-                                        @endif
+                                    <td>{{ $quitAttempt->formatted_start_date }}</td>
+                                    @if($quitAttempt->end_date)
                                         <td>
-                                            <form action="{{ route('quit-attempts.destroy', $quitAttempt) }}"
-                                                  method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" style="border: none; background: none;">
-                                                    <i class="fas fa-trash" style="color: #403f3d;"></i>
-                                                </button>
-                                            </form>
+                                            {{ $quitAttempt->formatted_end_date }}
                                         </td>
+                                    @else
+                                        <td>
+                                            -
+                                        </td>
+                                    @endif
+                                    @if($quitAttempt->reasons->isEmpty())
+                                        <td>
+                                            <span class="badge" style="background-color: #403f3d; color:white;">No reasons</span>
+                                        </td>
+                                    @else
+                                        <td>
+                                            {{ $quitAttempt->reasons->pluck('reason')->implode(', ') }}
+                                        </td>
+                                    @endif
+                                    <td>
+                                        @if(!is_null($quitAttempt->end_date))
+                                            <span class="badge bg-danger p-2">Failed</span>
+                                        @else
+                                            <span class="badge bg-success p-2">Ongoing</span>
+                                        @endif
+                                    </td>
 
-                                    </tr>
-                                @endforeach
-                            @endif
-                            </tbody>
-                        </table>
-                        <div class="d-flex mt-3">
-                            {{ $quitAttempts->links() }}
-                        </div>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                    <div class="d-flex mt-3">
+                        {{ $quitAttempts->links() }}
                     </div>
                 </div>
             </div>

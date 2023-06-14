@@ -4,7 +4,7 @@ return [
     'title' => 'Quit Attempts',
     'header' => 'Add attempt',
     'forms' => [
-        'start_date' => 'Start Date',
+        'start_date' => 'I will stop on',
         'end_date' => 'End Date',
     ],
     'buttons' => [
@@ -20,5 +20,6 @@ return [
         'reasons' => 'Reasons',
         'smoking_data' => 'Smoking Data',
         'actions' => 'Actions',
+        'status' => 'Status'
     ],
 ];

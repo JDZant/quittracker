@@ -12,8 +12,9 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
                                 <h3>Stopped since</h3>
-                                <a href="" class="btn btn-danger">I failed</a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#failModal">I failed</button>
                             </div>
+
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered">
                                     <tbody>
@@ -133,17 +134,20 @@
                 </div>
             </div>
         </div>
+        @include('modals.confirm')
+
     @else
         <div class="d-flex justify-content-center">
-            <div class="col-6">
-                <div class="text-center">
-                    <div class="alert alert-secondary mt-3">
-                        <h4>No current attempt...</h4>
-                    </div>
+            <div class="col-2">
+                <div class="text-center mt-3">
+                    <a href="{{ route('quit-attempts.create') }}">
+                        <button {{ $activeAttempt ? 'disabled' : '' }} class="btn btn-secondary btn-lg">Lets start!</button>
+                    </a>
                 </div>
             </div>
         </div>
     @endif
+
 
 @endsection
 
