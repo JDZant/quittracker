@@ -11,4 +11,15 @@ class Reason extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    const TYPES = [
+        'quit',
+        'relapse'
+    ];
+
+    public function getTypeAttribute(): string
+    {
+        return self::TYPES[$this->type];
+    }
+
 }
