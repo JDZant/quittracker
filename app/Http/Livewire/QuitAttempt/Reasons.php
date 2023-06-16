@@ -19,16 +19,23 @@ class Reasons extends Component
         $this->emit('reasonsUpdated', $this->selectedReasons);
     }
 
-    public function updateComponent(){
+    public function updateComponent(): void
+    {
         $this->render();
     }
 
-    public function add(){
+    public function add(): void
+    {
         $this->selectedReasons[] = '';
         $this->emit('updateComponent');
     }
 
-    public function render()
+    public function remove($key): void
+    {
+        unset($this->selectedReasons[$key]);
+    }
+
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.quit-attempt.reasons');
     }
