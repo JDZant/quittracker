@@ -64,10 +64,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        //create the user
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        // Create notification settings for the user
+        $user->notificationSetting()->create([
+            'email_notifications' => true, // default value
+            'frequency' => 'daily', // default value
+            'user_id' => $user->id, // default value
+        ]);
+
+        return $user;
     }
+
+
 }

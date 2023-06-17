@@ -293,12 +293,17 @@ return [
         [
             'text' => 'Current attempt',
             'url'  => 'current-attempt',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-smoking-ban',
         ],
         [
             'text' => 'My attempts',
             'url'  => 'quit-attempts',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-list',
+        ],
+        [
+            'text' => 'Notifications',
+            'url'  => 'notification-settings',
+            'icon' => 'fas fa-bell',
         ],
 
 
