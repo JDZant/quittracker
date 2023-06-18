@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserNotificationRequest;
 use App\Models\User;
 use App\Models\UserNotificationSetting;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class NotificationController extends Controller
 {
@@ -19,12 +19,22 @@ class NotificationController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserNotificationRequest $request, User $user)
     {
-        $user->notificationSettings()->update([
-            'email_notifications' => $request->email_notifications,
-            'frequency' => $request->frequency,
-            'user_id' => $user->id
+        $data = $request->validated();
+        $notificationSettings = $user
+            ->with('notificationSettings')
+            ->first()
+            ->notificationSettings;
+
+        $notificationSettings->update([
+           'email_notifications' => $data['email_notifications'],
+           'frequency' => $data['frequency'],
+           'user_id' => $user->id
+        ]);
+
+        $user->update([
+           'email' => $data['email']
         ]);
 
         return redirect()->back()->with('success', 'Notification settings updated successfully.');

@@ -7,11 +7,15 @@
                 <div class="card-header">{{ __('Notification Settings') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('notification-settings.update', $user->id) }}">
+                    <form method="POST" action="{{ route('notification-settings.update', ['user' => $user]) }}">
                         @csrf
                         @method('PUT')
-
                         <!-- Recipient Email -->
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <div class="form-group">
                             <label for="email">{{ __('Recipient address') }}</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -28,8 +32,9 @@
                         <!-- Email Notifications Toggle -->
                         <div class="form-group">
                             <div class="custom-control custom-switch">
+                                <input type="hidden" name="email_notifications" value="0">
                                 <input type="checkbox" class="custom-control-input" id="email_notifications"
-                                       name="email_notifications"
+                                       name="email_notifications" value="1"
                                        @if($user->notificationSettings->email_notifications) checked @endif>
                                 <label class="custom-control-label"
                                        for="email_notifications">{{ __('Enable Email Notifications') }}</label>

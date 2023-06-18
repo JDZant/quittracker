@@ -32,8 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //notifications
     Route::get('/notification-settings', [NotificationController::class, 'index'])->name('notification-settings');
-    Route::put('/notification-settings/update/{id}', [NotificationController::class, 'update'])->name('notification-settings.update');
-
+    Route::put('/notification-settings/update/{user}', [NotificationController::class, 'update'])->name('notification-settings.update');
 
     //resource routes
     Route::resource('quit-attempts', QuitAttemptController::class);
