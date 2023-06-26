@@ -1,0 +1,26 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, xml, curl
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-ansi --no-interaction
+
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit
