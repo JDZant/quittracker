@@ -10,13 +10,12 @@ use Illuminate\Support\Facades\Password;
 use Tests\TestCase;
 
 
-
 class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function user_can_register(): void
+    public function user_can_register()
     {
         $userData = [
             'name' => 'John Doe',
@@ -24,57 +23,58 @@ class AuthenticationTest extends TestCase
             'password' => 'password123',
         ];
 
-        $response = $this->post('/register', $userData);
+        $response = $this->postJson('/api/register', $userData);
 
-        $response->assertRedirect('/dashboard');
-        $this->assertDatabaseHas('users', ['email' => $userData['email']]);
+        $response->assertStatus(201);
+        $this->assertDatabaseHas('users', ['email' => 'john@example.com']);
     }
 
+
     /** @test */
-    public function user_can_login(): void
+    public function user_can_login()
     {
         $user = User::factory()->create([
             'email' => 'john@example.com',
-            'password' => Hash::make('password123'),
+            'password' => bcrypt('password123'),
         ]);
 
-        $credentials = [
+        $loginData = [
             'email' => 'john@example.com',
             'password' => 'password123',
         ];
 
-        $response = $this->post('/login', $credentials);
+        $response = $this->postJson('/api/login', $loginData);
 
-        $response->assertRedirect('/home');
-        $this->assertAuthenticatedAs($user);
+        $response->assertStatus(200);
+        $this->assertAuthenticated();
     }
 
     /** @test */
-    public function user_can_logout(): void
+    public function user_can_logout()
     {
         $user = User::factory()->create();
 
         $this->actingAs($user);
 
-        $response = $this->post('/logout');
+        $response = $this->postJson('/api/logout');
 
-        $response->assertRedirect('/');
+        $response->assertStatus(200);
         $this->assertGuest();
     }
 
     /** @test */
-/*    public function user_can_reset_password(): void
-    {
-        $user = User::factory()->create(['email' => 'john@example.com']);
+    /*    public function user_can_reset_password(): void
+        {
+            $user = User::factory()->create(['email' => 'john@example.com']);
 
-        $response = $this->post('/password/email', ['email' => 'john@example.com']);
+            $response = $this->post('/password/email', ['email' => 'john@example.com']);
 
-        $response->assertRedirect('/password/reset');
-        $user = Auth::user();
-        $token = $user->createToken('authToken')->plainTextToken;
-        $this->assertDatabaseHas('password_resets', [
-            'email' => 'john@example.com',
-            'token' => $token,
-        ]);
-    }*/
+            $response->assertRedirect('/password/reset');
+            $user = Auth::user();
+            $token = $user->createToken('authToken')->plainTextToken;
+            $this->assertDatabaseHas('password_resets', [
+                'email' => 'john@example.com',
+                'token' => $token,
+            ]);
+        }*/
 }
