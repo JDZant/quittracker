@@ -19,4 +19,8 @@ class LoginController
 
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
+
+    public function doesTestingWork(){
+        return 'test';
+    }
 }
