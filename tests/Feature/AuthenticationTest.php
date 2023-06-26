@@ -48,7 +48,9 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertAuthenticated();
+        $this->assertArrayHasKey('access_token', $response->json());
     }
+
 
     public function user_can_logout()
     {
