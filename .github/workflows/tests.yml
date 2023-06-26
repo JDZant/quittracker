@@ -16,8 +16,11 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           extensions: mbstring, xml, curl
+          
+      - name: Copy .env.testing file
+        run: cp .env.testing .env
 
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-ansi --no-interaction
