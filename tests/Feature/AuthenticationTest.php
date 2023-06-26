@@ -21,16 +21,17 @@ class AuthenticationTest extends TestCase
             'name' => 'John Doe',
             'email' => 'john@example.com',
             'password' => 'password123',
+            'password_confirmation' => 'password123',
         ];
 
         $response = $this->postJson('/api/register', $userData);
 
         $response->assertStatus(201);
-        $this->assertDatabaseHas('users', ['email' => 'john@example.com']);
+        $this->assertDatabaseHas('users', [
+            'email' => 'john@example.com',
+        ]);
     }
 
-
-    /** @test */
     public function user_can_login()
     {
         $user = User::factory()->create([
@@ -49,7 +50,6 @@ class AuthenticationTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    /** @test */
     public function user_can_logout()
     {
         $user = User::factory()->create();
