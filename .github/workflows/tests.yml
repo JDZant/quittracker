@@ -18,6 +18,9 @@ jobs:
         with:
           php-version: '8.1'
           extensions: mbstring, xml, curl
+          
+      - name: Copy .env.testing file
+        run: cp .env.testing .env
 
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-ansi --no-interaction
