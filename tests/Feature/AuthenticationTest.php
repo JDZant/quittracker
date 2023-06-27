@@ -34,12 +34,11 @@ class AuthenticationTest extends TestCase
 
     public function user_can_login()
     {
-        $user = User::factory()->create([
+        User::factory()->create([
             'email' => 'john@example.com',
             'password' => bcrypt('password123'),
         ]);
 
-        dd($user);
 
         $loginData = [
             'email' => 'john@example.com',
@@ -50,7 +49,7 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertAuthenticated();
-        $this->assertArrayHasKey('access_token', $response->json());
+        $this->assertArrayHasKey('token', $response->json());
     }
 
 
