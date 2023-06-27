@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class LoginController
 {
-    public function login(Request $request)
+    public function login(Request $request): \Illuminate\Http\JsonResponse
     {
         $credentials = $request->only('email', 'password');
 

@@ -99,7 +99,7 @@
 
                         <div class="form-group d-flex justify-content-end">
                             <button type="submit"
-                                    class="btn form-button">{{__('quit-attempts.buttons.save')}}</button>
+                                    class="btn btn-primary form-button">{{__('quit-attempts.buttons.save')}}</button>
                         </div>
                     </form>
                 </div>

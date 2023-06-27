@@ -35,7 +35,7 @@
                                 <input type="hidden" name="email_notifications" value="0">
                                 <input type="checkbox" class="custom-control-input" id="email_notifications"
                                        name="email_notifications" value="1"
-                                       @if($user->notificationSettings->email_notifications) checked @endif>
+                                       @if($user->notificationSettings?->email_notifications) checked @endif>
                                 <label class="custom-control-label"
                                        for="email_notifications">{{ __('Enable Email Notifications') }}</label>
                             </div>
@@ -47,13 +47,15 @@
                             <select id="frequency" class="form-control @error('frequency') is-invalid @enderror"
                                     name="frequency" required>
                                 <option value="daily"
-                                        @if ($user->notificationSettings->frequency  === 'daily') selected @endif>Daily
+                                        @if ($user->notificationSettings?->frequency  === 'daily') selected @endif>
+                                    Daily
                                 </option>
                                 <option value="weekly"
-                                        @if ($user->notificationSettings->frequency === 'weekly') selected @endif>Weekly
+                                        @if ($user->notificationSettings?->frequency === 'weekly') selected @endif>
+                                    Weekly
                                 </option>
                                 <option value="monthly"
-                                        @if ($user->notificationSettings->frequency === 'monthly') selected @endif>
+                                        @if ($user->notificationSettings?->frequency === 'monthly') selected @endif>
                                     Monthly
                                 </option>
                             </select>
