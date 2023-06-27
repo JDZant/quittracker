@@ -15,9 +15,13 @@ jobs:
     services:
       mysql_test:
         image: mariadb:latest
+        ports:
+          - "3307:3306"
+        volumes:
+          - ./mysql_test:/var/lib/mysql
         env:
           MYSQL_DATABASE: qs_test
-          MYSQL_USER: root
+          MYSQL_USER: homestead_test
           MYSQL_PASSWORD: secret_test
           MYSQL_ROOT_PASSWORD: secret_test
 
