@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('test_data', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('quit_attempts', function (Blueprint $table) {
+            $table->foreignId('user_id')->after('end_date')->constrained();
         });
     }
 
@@ -22,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('test_data');
+        Schema::table('quit_attempts', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+        });
     }
 };

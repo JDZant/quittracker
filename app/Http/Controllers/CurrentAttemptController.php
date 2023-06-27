@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\QuitAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CurrentAttemptController extends Controller
 {
@@ -25,7 +26,8 @@ class CurrentAttemptController extends Controller
      */
     public function index()
     {
-        $baseQuery = QuitAttempt::with('smokingData', 'reasons');
+        $baseQuery = QuitAttempt::with('smokingData', 'reasons')
+        ->whereUserId(Auth::user()->id);
 
         $activeAttempt = $baseQuery->whereNull('end_date')->first();
         if (isset($activeAttempt)) {

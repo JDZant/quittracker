@@ -4,9 +4,9 @@ namespace App\Http\Livewire\QuitAttempt;
 
 //libraries
 use App\Models\Reason;
-use Carbon\Carbon;
 
 //livewire
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 //models
@@ -39,8 +39,12 @@ class SmokingData extends Component
         //remove start_date from array
         $startDate = array_shift($validatedData);
 
+
         //create quit attempt
-        $quitAttempt = QuitAttempt::create(['start_date' => $startDate]);
+        $quitAttempt = QuitAttempt::create([
+            'start_date' => $startDate,
+            'user_id' => Auth::user()->id
+            ]);
 
         //add quit attempt id to array
         $validatedData['quit_attempt_id'] = $quitAttempt->id;

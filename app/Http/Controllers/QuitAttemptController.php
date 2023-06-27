@@ -7,6 +7,7 @@ use App\Models\QuitAttempt;
 use App\Models\Reason;
 use App\Models\SmokingData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuitAttemptController extends Controller
 {
@@ -15,8 +16,13 @@ class QuitAttemptController extends Controller
      */
     public function index()
     {
-        $quitAttempts = QuitAttempt::with('reasons')->paginate(10);
-        $activeAttempt = QuitAttempt::whereNull('end_date')->first();
+        $quitAttempts = QuitAttempt::with('reasons')
+            ->whereUserId(Auth::user()->id)
+            ->paginate(10);
+        $activeAttempt = QuitAttempt::whereNull('end_date')
+            ->whereUserId(Auth::user()->id)
+            ->first();
+
         return view('pages.quit-attempt.index', [
             'quitAttempts' => $quitAttempts,
             'activeAttempt' => $activeAttempt
