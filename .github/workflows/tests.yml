@@ -14,7 +14,7 @@ jobs:
     container: mariadb:latest
 
     services:
-      mysql:
+      mysql-test-qs:
         image: mysql:latest
         env:
           MYSQL_DATABASE: qs_test
