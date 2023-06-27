@@ -34,7 +34,7 @@ jobs:
         run: composer install --prefer-dist --no-interaction
 
       - name: Set up environment variables
-        run: cp .env-testing .env
+        run: cp .env.testing .env
 
       - name: Generate application key
         run: php artisan key:generate --ansi
