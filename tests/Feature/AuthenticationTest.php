@@ -15,7 +15,7 @@ class AuthenticationTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-/*    public function user_can_register()
+    public function user_can_register()
     {
         $userData = [
             'name' => 'John Doe',
@@ -30,7 +30,7 @@ class AuthenticationTest extends TestCase
         $this->assertDatabaseHas('users', [
             'email' => 'john@example.com',
         ]);
-    }*/
+    }
 
     public function user_can_login()
     {
@@ -65,19 +65,4 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
-    /** @test */
-    /*    public function user_can_reset_password(): void
-        {
-            $user = User::factory()->create(['email' => 'john@example.com']);
-
-            $response = $this->post('/password/email', ['email' => 'john@example.com']);
-
-            $response->assertRedirect('/password/reset');
-            $user = Auth::user();
-            $token = $user->createToken('authToken')->plainTextToken;
-            $this->assertDatabaseHas('password_resets', [
-                'email' => 'john@example.com',
-                'token' => $token,
-            ]);
-        }*/
 }
