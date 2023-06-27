@@ -13,17 +13,24 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mysql_test:
+      mysql:
         image: mariadb:latest
+        command: --lower_case_table_names=1
+        container_name: mysql-test-qs
+        platform: linux/x86_64
+        restart: unless-stopped
+        tty: true
         ports:
           - "3307:3306"
         volumes:
           - ./mysql_test:/var/lib/mysql
-        env:
+        environment:
           MYSQL_DATABASE: qs_test
           MYSQL_USER: homestead_test
           MYSQL_PASSWORD: secret_test
           MYSQL_ROOT_PASSWORD: secret_test
+        networks:
+          - laravel
 
     steps:
       - name: Checkout code
