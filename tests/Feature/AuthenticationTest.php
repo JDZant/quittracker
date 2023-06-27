@@ -53,7 +53,7 @@ class AuthenticationTest extends TestCase
     }
 
 
-/*    public function user_can_logout()
+    public function user_can_logout()
     {
         $user = User::factory()->create();
 
@@ -63,7 +63,7 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertGuest();
-    }*/
+    }
 
     /** @test */
     /*    public function user_can_reset_password(): void
