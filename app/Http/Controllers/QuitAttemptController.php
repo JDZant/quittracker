@@ -43,14 +43,7 @@ class QuitAttemptController extends Controller
      */
     public function store(QuitAttemptRequest $request)
     {
-        $data = $request->validated();
-        $startDate = array_shift($data);
-        $quitAttempt = QuitAttempt::create(['start_date' => $startDate]);
-        $data['quit_attempt_id'] = $quitAttempt->id;
-        $this->storeSmokingData($data);
 
-        return redirect()->route('quit-attempts.index')
-            ->with('success', 'Quit Attempt created successfully');
     }
 
     private function storeSmokingData($data){

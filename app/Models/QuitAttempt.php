@@ -23,7 +23,7 @@ class QuitAttempt extends Model
         return $this->hasMany(Reason::class);
     }
 
-    public function SmokingData(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function smokingData(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(SmokingData::class);
     }
