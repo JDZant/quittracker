@@ -17,8 +17,6 @@
                             @endif
                         </div>
                     @endforeach
-
-
                     <button wire:click.prevent="add" class="btn ml-auto text-blue">
                         {{ __('reasons.buttons.add') }}
                     </button>

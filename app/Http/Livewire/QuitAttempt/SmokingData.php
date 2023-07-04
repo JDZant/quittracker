@@ -39,7 +39,6 @@ class SmokingData extends Component
         //remove start_date from array
         $startDate = array_shift($validatedData);
 
-
         //create quit attempt
         $quitAttempt = QuitAttempt::create([
             'start_date' => $startDate,
@@ -62,7 +61,7 @@ class SmokingData extends Component
             ]);
         }
 
-        return redirect()->route('current-attempt')->with('status', 'Quit attempt added!');
+        return redirect()->route('goals');
     }
 
     public function updateReasons($selectedReasons): void

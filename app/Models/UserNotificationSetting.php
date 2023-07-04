@@ -15,6 +15,7 @@ class UserNotificationSetting extends Model
         'user_id',
     ];
 
+    //relations
     public function user()
     {
         return $this->belongsTo(User::class);

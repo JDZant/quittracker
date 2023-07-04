@@ -17,7 +17,7 @@ class QuitAttempt extends Model
         'user_id'
     ];
 
-
+    //relations
     public function reasons(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Reason::class);
@@ -28,6 +28,12 @@ class QuitAttempt extends Model
         return $this->hasOne(SmokingData::class);
     }
 
+    public function goals(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Goal::class);
+    }
+
+    //attributes
     public function getFormattedStartDateAttribute(): string
     {
         return Carbon::parse($this->start_date)->format('d-m-Y');
@@ -37,6 +43,7 @@ class QuitAttempt extends Model
     {
         return $this->end_date ? Carbon::parse($this->end_date)->format('d-m-Y') : null;
     }
+
 
 
 

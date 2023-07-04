@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CurrentAttemptController;
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\QuitAttemptController;
 use App\Http\Controllers\ReasonController;
@@ -29,6 +30,9 @@ Route::group(['middleware' => ['auth']], function () {
     //quit-attempts
     Route::get('/current-attempt', [CurrentAttemptController::class, 'index'])->name('current-attempt');
     Route::put('/end-attempt/{attempt}', [CurrentAttemptController::class, 'endCurrentAttempt'])->name('current-attempt.end');
+
+    //goals
+    Route::get('goals', [GoalController::class, 'index'])->name('goals');
 
     //notifications
     Route::get('/notification-settings', [NotificationController::class, 'index'])->name('notification-settings');

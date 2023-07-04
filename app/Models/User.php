@@ -43,6 +43,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    //relations
     public function notificationSettings(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(UserNotificationSetting::class);

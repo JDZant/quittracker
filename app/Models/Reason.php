@@ -17,6 +17,7 @@ class Reason extends Model
         'relapse'
     ];
 
+    //attributes
     public function getTypeAttribute(): string
     {
         return self::TYPES[$this->type];
