@@ -39,9 +39,9 @@ jobs:
         
       - name: Check MySQL connection
         run: |
-            while ! mysqladmin ping -h"127.0.0.1" --silent; do
-                sleep 1
-            done
+          until echo 'SELECT 1' | mysql -h"127.0.0.1" -u"homestead_test" -p"secret_test" -e "SELECT 1"; do
+            sleep 1
+          done
 
       - name: Generate application key
         run: php artisan key:generate --ansi
