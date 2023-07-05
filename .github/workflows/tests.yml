@@ -25,6 +25,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Check MySQL connection
+        run: |
+          until echo 'SELECT 1' | mysql -h"127.0.0.1" -u"homestead_test" -p"secret_test" -e "SELECT 1"; do
+            sleep 1
+          done
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -36,12 +42,6 @@ jobs:
 
       - name: Set up environment variables
         run: cp .env.testing .env
-        
-      - name: Check MySQL connection
-        run: |
-          until echo 'SELECT 1' | mysql -h"127.0.0.1" -u"homestead_test" -p"secret_test" -e "SELECT 1"; do
-            sleep 1
-          done
 
       - name: Generate application key
         run: php artisan key:generate --ansi
