@@ -21,7 +21,7 @@ jobs:
           MYSQL_USER: homestead_test
           MYSQL_PASSWORD: secret_test
           MYSQL_ROOT_PASSWORD: root
-          
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
 
       - name: Generate application key
         run: php artisan key:generate --ansi
-        
+
       - name: Run database migrations
         run: php artisan migrate --env=testing --force
 
