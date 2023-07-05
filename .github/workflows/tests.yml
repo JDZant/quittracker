@@ -39,6 +39,10 @@ jobs:
 
       - name: Generate application key
         run: php artisan key:generate --ansi
+        
+      - name: Test DB connection
+        run: echo "SHOW TABLES;" | mysql --host=mysql-test-qs --user=homestead_test --password=secret_test qs_test
+
 
       - name: Run database migrations
         run: php artisan migrate --env=testing --force
