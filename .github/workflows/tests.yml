@@ -39,7 +39,7 @@ jobs:
 
       - name: Generate application key
         run: php artisan key:generate --ansi
-
+        
       - name: Run database migrations
         run: php artisan migrate --env=testing --force
 

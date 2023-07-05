@@ -22,17 +22,17 @@ class Goals extends Component
 
         if ($this->scale == 'week') {
             while ($currentDate->lessThanOrEqualTo($this->endDate)) {
-                array_push($this->timeLine, $currentDate->copy());
+                $this->timeLine[] = $currentDate->copy();
                 $currentDate->addWeek();
             }
         } elseif ($this->scale == 'month') {
             while ($currentDate->lessThanOrEqualTo($this->endDate)) {
-                array_push($this->timeLine, $currentDate->copy());
+                $this->timeLine[] = $currentDate->copy();
                 $currentDate->addMonth();
             }
         } elseif ($this->scale == 'year') {
             while ($currentDate->lessThanOrEqualTo($this->endDate)) {
-                array_push($this->timeLine, $currentDate->copy());
+                $this->timeLine[] = $currentDate->copy();
                 $currentDate->addYear();
             }
         }
