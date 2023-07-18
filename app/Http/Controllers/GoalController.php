@@ -14,4 +14,8 @@ class GoalController extends Controller
         return view('pages.goal.goals');
     }
 
+    public function store(Request $request){
+
+    }
+
 }

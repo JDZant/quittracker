@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
 @section('content')
-    @if(!is_null($activeAttempt))
+    @if($activeAttempt)
         <div class="container col-12">
-            <div class="row justify-content-start">
+            <div class="row">
                 <div class="col-md-6">
                     <div class="card mt-3">
                         <div class="card-header text-center">
@@ -32,7 +32,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 text-center">
+
+                <div class="col-md-3 text-center">
                     <div class="card mt-3">
                         <div class="card-header text-center">
                             <h5>{{ __('Reasons') }}</h5>
@@ -47,7 +48,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="card mt-3">
                         <div class="card-header text-center">
                             <h5>{{ __('Total attempts') }}</h5>
@@ -59,9 +60,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="row col-12">
+
+            <div class="row">
                 <div class="col-6">
                     <div class="card mt-3">
                         <div class="card-header text-center">

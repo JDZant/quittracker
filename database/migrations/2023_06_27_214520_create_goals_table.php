@@ -13,7 +13,6 @@ class CreateGoalsTable extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->date('achieved_at')->nullable();
             $table->foreignId('quit_attempt_id')->constrained('quit_attempts');
             $table->timestamps();
