@@ -63,9 +63,9 @@ return [
     |
     */
 
-    'logo' => '<b>QuitTracker</b>',
-    'logo_img' => 'storage/images/app-icon.jpg',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '',
+    'logo_img' => 'storage/images/logo-wit-text.png',
+    'logo_img_class' => 'app-logo',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Not working!',
@@ -84,11 +84,11 @@ return [
     */
 
     'auth_logo' => [
-        'enabled' => false,
+        'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'storage/images/logo-blauw-text.png',
             'alt' => 'Auth Logo',
-            'class' => '',
+            'class' => 'app-logo',
             'width' => 50,
             'height' => 50,
         ],
@@ -167,7 +167,7 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'card-outline',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
