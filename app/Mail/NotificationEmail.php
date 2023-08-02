@@ -17,7 +17,7 @@ class NotificationEmail extends Mailable
         $this->content = $content;
     }
 
-    public function build()
+    public function build(): NotificationEmail
     {
         return $this->subject('Notification Email')
             ->view('emails.smoking-data')

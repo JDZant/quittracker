@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reward extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+
+    protected $guarded = [];
 
     //relations
-    public function goal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function quitAttempt(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Goal::class);
+        return $this->belongsTo(quitAttempt::class);
     }
 }

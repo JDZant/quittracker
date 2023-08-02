@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\QuitAttempt;
+use App\Traits\CalculatedSmokingData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class CurrentAttemptController extends Controller
 {
+    use CalculatedSmokingData;
     /**
      * Create a new controller instance.
      *
@@ -30,32 +32,20 @@ class CurrentAttemptController extends Controller
         ->whereUserId(Auth::user()->id);
 
         $activeAttempt = $baseQuery->whereNull('end_date')->first();
+
         if (isset($activeAttempt)) {
-            $smokingData = $activeAttempt->smokingData;
-            $daysStopped = Carbon::parse($activeAttempt->start_date)->diffInDays(now());
-            $cigarettesNotSmokedSince = $smokingData->cigarettes_per_day * $daysStopped;
-            $nicotineNotInhaledSince = $smokingData->nicotine_per_cigarette * $cigarettesNotSmokedSince;
-            $tarNotInhaledSince = $smokingData->tar_per_cigarette * $cigarettesNotSmokedSince;
-            $packetsNotBoughtSince = floor($cigarettesNotSmokedSince / $smokingData->cigarettes_per_pack);
-            $moneyNotSpentOnCigarettesSince = $packetsNotBoughtSince * $smokingData->cost_per_pack;
-        } else {
-            $daysStopped = null;
-            $cigarettesNotSmokedSince = null;
-            $nicotineNotInhaledSince = null;
-            $tarNotInhaledSince = null;
-            $packetsNotBoughtSince = null;
-            $moneyNotSpentOnCigarettesSince = null;
+            $metrics = $this->calculateSmokingData($activeAttempt);
         }
 
         return view('pages.current-attempt.current-attempt', [
             'quitAttempts' => QuitAttempt::with('smokingData', 'reasons')->paginate(25),
             'activeAttempt' => $activeAttempt,
-            'daysStopped' => $daysStopped,
-            'cigarettesNotSmokedSince' => $cigarettesNotSmokedSince,
-            'nicotineNotInhaledSince' => $nicotineNotInhaledSince,
-            'tarNotInhaledSince' => $tarNotInhaledSince,
-            'packetsNotBoughtSince' => $packetsNotBoughtSince,
-            'moneyNotSpentOnCigarettesSince' => $moneyNotSpentOnCigarettesSince
+            'daysStopped' => $this->daysStopped,
+            'cigarettesNotSmokedSince' => $metrics['cigarettesNotSmokedSince'] ?? 0,
+            'nicotineNotInhaledSince' => $metrics['nicotineNotInhaledSince'] ?? 0,
+            'tarNotInhaledSince' => $metrics['tarNotInhaledSince'] ?? 0,
+            'packetsNotBoughtSince' => $metrics['packetsNotBoughtSince'] ?? 0,
+            'moneyNotSpentOnCigarettesSince' => $metrics['moneyNotSpentOnCigarettesSince'] ?? 0
         ]);
     }
 

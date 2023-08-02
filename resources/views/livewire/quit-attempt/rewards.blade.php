@@ -1,8 +1,8 @@
 <div class="w-100">
     <div class="d-flex justify-content-between p-3">
         <div class="d-flex flex-column">
-            <h1>Goals</h1>
-            <h4>Select a {{ $scale }} to set a goal</h4>
+            <h1>Rewards</h1>
+            <h4>Select a {{ $scale }} to set add rewards</h4>
         </div>
         <div class="d-flex flex-column">
             <label>
@@ -16,10 +16,10 @@
     </div>
     <div class="d-flex flex-wrap justify-content-start">
         @foreach($timeLine as $date)
-            <div class="calendar-item mb-3 mr-3 p-5 col-2 text-center"
+            <div wire:click="setModalData('{{ $date }}')"
+                 class="calendar-item mb-3 mr-3 p-5 col-2 text-center {{ in_array($date->toDateString(), $this->rewardDates) ? 'bg-success' : '' }}"
                  data-toggle="modal"
-                 data-date="{{ $date }}"
-                 data-target="#addGoalModal">
+                 data-target="#addRewardModal">
                 <div>
                     @if($scale == 'week')
                         <strong>{{ 'Week ' . $date->weekOfYear }}</strong>
@@ -32,5 +32,5 @@
             </div>
         @endforeach
     </div>
-    @include('modals.add-goal')
+    @include('modals.add-reward')
 </div>

@@ -60,8 +60,7 @@ class SmokingData extends Component
                 'quit_attempt_id' => $quitAttempt->id
             ]);
         }
-
-        return redirect()->route('goals');
+        return redirect()->route('rewards', ['quit_attempt' => $quitAttempt->id]);
     }
 
     public function updateReasons($selectedReasons): void

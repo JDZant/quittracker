@@ -13,9 +13,15 @@
                             <label class="font-weight-normal"
                                    for="start_date">{{ __('quit-attempts.forms.start_date') }}</label>
                             <div class="w-50">
-                                <input type="date" max="{{ date('Y-m-d') }}" wire:model.lazy="start_date" name="start_date" value="start_date"
-                                       id="start_date"
-                                       class="form-control">
+                                <label id="date-label" class="w-100">
+                                    <input type="date"
+                                           max="{{ date('Y-m-d') }}"
+                                           wire:model.lazy="start_date"
+                                           name="start_date"
+                                           value="start_date"
+                                           id="start_date"
+                                           class="form-control">
+                                </label>
                                 @error('start_date')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

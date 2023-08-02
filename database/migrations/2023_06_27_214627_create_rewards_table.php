@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('rewards', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('goal_id')->constrained('goals');
+            $table->foreignId('quit_attempt_id')->constrained();
+            $table->date('date');
             $table->timestamps();
         });
     }
