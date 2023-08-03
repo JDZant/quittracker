@@ -20,16 +20,17 @@ class AddRewardModal extends Component
 
     public function setModal($message, $date, $quitAttemptId, $rewards): void
     {
-        $this->showModal = false;
         $this->date = $date;
         $this->message = $message;
         $this->quitAttemptId = $quitAttemptId;
         $this->rewards = $rewards;
+        $this->showModal = true;
     }
 
-    public function closeModal(): void
+    public function closeModal()
     {
         $this->showModal = false;
+        return redirect()->to("/rewards/{$this->quitAttemptId}");
     }
 
     public function addReward(): void

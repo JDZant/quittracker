@@ -31,9 +31,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/current-attempt', [CurrentAttemptController::class, 'index'])->name('current-attempt');
     Route::put('/end-attempt/{attempt}', [CurrentAttemptController::class, 'endCurrentAttempt'])->name('current-attempt.end');
 
-    //goals
+    //rewards
     Route::get('/rewards/{quit_attempt}', [RewardController::class, 'index'])->name('rewards');
     Route::post('/rewards/add', [RewardController::class, 'store'])->name('rewards.store');
+    Route::get('/rewards', [RewardController::class, 'show'])->name('rewards');
 
     //notifications
     Route::get('/notification-settings', [NotificationController::class, 'index'])->name('notification-settings');

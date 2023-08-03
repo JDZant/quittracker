@@ -291,22 +291,38 @@ return [
 
     'menu' => [
         [
-            'text' => 'Current attempt',
-            'url'  => 'current-attempt',
+            'header' => 'Personal',
+        ],
+        [
+            'text' => 'Active Attempt',
+            'url' => 'current-attempt',
             'icon' => 'fas fa-smoking-ban',
+            'submenu' => [
+                [
+                    'text' => 'My stats',
+                    'url' => "current-attempt",
+                    'icon' => 'fas fa-info-circle',
+                ],
+                [
+                    'text' => 'Add rewards',
+                    'url' => "rewards",
+                    'icon' => 'fas fa-gift',
+                ],
+            ]
+        ],
+        [
+            'header' => 'Settings',
         ],
         [
             'text' => 'My attempts',
-            'url'  => 'quit-attempts',
+            'url' => 'quit-attempts',
             'icon' => 'fas fa-list',
         ],
         [
             'text' => 'Notifications',
-            'url'  => 'notification-settings',
+            'url' => 'notification-settings',
             'icon' => 'fas fa-bell',
         ],
-
-
     ],
 
     /*

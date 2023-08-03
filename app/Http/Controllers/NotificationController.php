@@ -7,12 +7,15 @@ use App\Mail\NotificationEmail;
 use App\Models\QuitAttempt;
 use App\Models\User;
 use App\Models\UserNotificationSetting;
+use App\Traits\CalculatedSmokingData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 
 class NotificationController extends Controller
 {
+    use CalculatedSmokingData;
+
     public function index()
     {
         $user = User::with('notificationSettings')->findOrFail(auth()->id());
@@ -31,7 +34,7 @@ class NotificationController extends Controller
             ->first()
             ->notificationSettings;
 
-        if(is_null($notificationSettings)){
+        if (is_null($notificationSettings)) {
             UserNotificationSetting::create([
                 'email_notifications' => $data['email_notifications'],
                 'frequency' => $data['frequency'],
@@ -56,18 +59,17 @@ class NotificationController extends Controller
         $user = Auth::user();
         $recipientEmail = $user->email;
         $quitAttempt = QuitAttempt::whereUserId($user->id)->first();
+        $smokingData = $this->calculateSmokingData($quitAttempt);
 
-        dd($quitAttempt->smokingData);
+        $content = [
+            'daysStopped' => $this->daysStopped,
+            'smokingData' => $smokingData
+        ];
 
-        $emailContent = 'This is the email notification content.';
-
-        Mail::to($recipientEmail)->send(new NotificationEmail($emailContent));
+        Mail::to($recipientEmail)->send(new NotificationEmail($content));
 
         return redirect()->back()->with('success', 'Email notification sent successfully.');
     }
-
-
-
 
 
 }

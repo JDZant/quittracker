@@ -1,6 +1,5 @@
 <div>
-    <div wire:ignore.self class="modal fade {{ $showModal ? 'show d-block' : '' }}"
-         id="addRewardModal"
+    <div class="modal fade {{ $showModal ? 'show d-block' : '' }}"
          tabindex="-1"
          role="dialog"
          aria-labelledby="failModalLabel"
@@ -11,7 +10,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="failModalLabel">{{ $message }}</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <button type="button" wire:click="closeModal" class="close text-white"  aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -38,12 +37,12 @@
                         <div class="d-flex justify-content-between">
                             <input wire:keydown.enter="addReward" wire:model="rewardName" name="name"
                                    class="form-control">
-                            <button wire:click="addReward" class="btn btn-sm ml-2 bg-blue-custom btn-hover text-white">Add
+                            <button wire:click="addReward" class="reward-modal-button btn btn-sm ml-2 bg-blue-custom btn-hover text-white">Add
                             </button>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary btn-hover" data-dismiss="modal">Close</button>
+                        <button type="button" class="reward-modal-button form-control btn btn-sm btn-primary btn-hover" wire:click="closeModal">Confirm</button>
                     </div>
                 </div>
             </div>

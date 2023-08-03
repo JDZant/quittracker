@@ -84,6 +84,7 @@ class Rewards extends Component
 
         $rewards = Reward::whereQuitAttemptId($this->quitAttempt->id)->whereDate('date', $date)->get();
 
+
         $this->emit('set-modal', $message, $date, $this->quitAttempt->id, $rewards);
 
     }

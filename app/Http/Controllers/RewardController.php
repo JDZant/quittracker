@@ -19,6 +19,14 @@ class RewardController extends Controller
         ]);
     }
 
+    public function show(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $currentAttempt = QuitAttempt::whereNull('end_date')->first();
+        return view('pages.rewards.rewards', [
+            'quitAttempt' => $currentAttempt
+        ]);
+    }
+
     public function store(RewardRequest $request){
         $data = $request->validated();
         Reward::create($data);
