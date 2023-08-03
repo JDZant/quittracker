@@ -20,7 +20,7 @@ jobs:
           MYSQL_DATABASE: ${{ secrets.DB_DATABASE }}
           MYSQL_USER: ${{ secrets.DB_USERNAME }}
           MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
           
     steps:
       - name: Checkout code
