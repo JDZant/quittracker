@@ -33,18 +33,27 @@ class CurrentAttemptController extends Controller
 
         $activeAttempt = $baseQuery->whereNull('end_date')->first();
 
-        $nextRewardDate = $activeAttempt
+        $nextReward = $activeAttempt
             ->rewards
-            ->where('date', '>', now())
+            ->filter(function ($reward) {
+                return Carbon::parse($reward->date)->isToday() || Carbon::parse($reward->date)->isFuture();
+            })
             ->sortBy('date')
-            ->first()
-            ->date;
+            ->first();
+
+        if ($nextReward) {
+            $nextRewardDate = $nextReward->date;
+        } else {
+            $nextRewardDate = 0;
+        }
 
         $quitAttemptStartDate = $activeAttempt->start_date;
         $totalPeriod = Carbon::parse($nextRewardDate)->diffInDays($quitAttemptStartDate);
         $elapsedTime = now()->diffInDays($quitAttemptStartDate);
 
         $progress = round(($elapsedTime / $totalPeriod) * 100, 2);
+
+        $daysLeft = $totalPeriod - $elapsedTime;
 
         if (isset($activeAttempt)) {
             $metrics = $this->calculateSmokingData($activeAttempt);
@@ -59,7 +68,9 @@ class CurrentAttemptController extends Controller
             'tarNotInhaledSince' => $metrics['tarNotInhaledSince'] ?? 0,
             'packetsNotBoughtSince' => $metrics['packetsNotBoughtSince'] ?? 0,
             'moneyNotSpentOnCigarettesSince' => $metrics['moneyNotSpentOnCigarettesSince'] ?? 0,
-            'progress' => $progress
+            'progress' => $progress,
+            'daysLeft' => $daysLeft,
+            'nextReward' => $nextReward
         ]);
     }
 

@@ -6,11 +6,12 @@
             <div class="d-flex">
                 <div class=" mt-3 d-flex w-100">
                     <div class="d-flex flex-column w-100">
-                        <h5>Progress until next reward</h5>
+                        <h3>{{ $daysLeft }} days left until you can reward yourself with "<strong>{{ $nextReward->name }}</strong>"</h3>
+                        <h4>Progress</h4>
                         <div class="progress d-flex w-100" style="height: 1.5rem;!important">
                             <div class="progress-bar progress-bar-striped"
                                  role="progressbar"
-                                 style="{{ $progress }}"
+                                 style="width:{{ $progress . '%' }}"
                                  aria-valuenow="25"
                                  aria-valuemin="0"
                                  aria-valuemax="100">
