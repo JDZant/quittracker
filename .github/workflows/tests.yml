@@ -17,9 +17,9 @@ jobs:
       mysql-test-qs:
         image: mysql:latest
         env:
-          MYSQL_DATABASE: qs_test
-          MYSQL_USER: homestead_test
-          MYSQL_PASSWORD: secret_test
+          MYSQL_DATABASE: ${{ secrets.DB_DATABASE }}
+          MYSQL_USER: ${{ secrets.DB_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MYSQL_ROOT_PASSWORD: root
           
     steps:
