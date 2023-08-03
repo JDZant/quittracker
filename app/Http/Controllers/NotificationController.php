@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserNotificationRequest;
 use App\Mail\NotificationEmail;
+use App\Models\QuitAttempt;
 use App\Models\User;
 use App\Models\UserNotificationSetting;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class NotificationController extends Controller
         ]);
     }
 
-    public function update(UserNotificationRequest $request, User $user)
+    public function update(UserNotificationRequest $request, User $user): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validated();
         $notificationSettings = $user
@@ -50,10 +51,13 @@ class NotificationController extends Controller
         return redirect()->back()->with('success', 'Notification settings updated successfully.');
     }
 
-    public function sendEmailNotification(): \Illuminate\Http\RedirectResponse
+    public function sendEmailNotification()
     {
         $user = Auth::user();
         $recipientEmail = $user->email;
+        $quitAttempt = QuitAttempt::whereUserId($user->id)->first();
+
+        dd($quitAttempt->smokingData);
 
         $emailContent = 'This is the email notification content.';
 

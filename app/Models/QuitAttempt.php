@@ -28,9 +28,9 @@ class QuitAttempt extends Model
         return $this->hasOne(SmokingData::class);
     }
 
-    public function goals(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function rewards(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Goal::class);
+        return $this->hasMany(Reward::class);
     }
 
     //attributes

@@ -142,7 +142,7 @@
             <div class="col-2">
                 <div class="text-center mt-3">
                     <a href="{{ route('quit-attempts.create') }}">
-                        <button {{ $activeAttempt ? 'disabled' : '' }} class="btn btn-secondary btn-lg">Lets start!</button>
+                        <button {{ $activeAttempt ? 'disabled' : '' }} class="btn bg-blue-custom text-white btn-hover btn-lg">Lets start!</button>
                     </a>
                 </div>
             </div>

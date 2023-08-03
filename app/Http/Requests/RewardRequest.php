@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GoalRequest extends FormRequest
+class RewardRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class GoalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reward' => 'required|text',
-            'goal' => 'required|date',
+            'name' => 'required|string',
+            'date' => 'required|string',
+            'quit_attempt_id' => 'required|exists:quit_attempts,id',
         ];
     }
 }
