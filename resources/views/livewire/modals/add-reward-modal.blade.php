@@ -26,7 +26,7 @@
                                         {{$reward['name']}}
                                     </div>
                                     <div wire:click="deleteReward({{$reward['id']}})" class="cursor-pointer">
-                                        <i class="text-primary fas fa-backspace fa-lg"></i>
+                                        <i class="fas fa-backspace text-orange fa-lg"></i>
                                     </div>
                                 </div>
                             @empty
@@ -40,9 +40,6 @@
                             <button wire:click="addReward" class="reward-modal-button btn btn-sm ml-2 bg-blue-custom btn-hover text-white">Add
                             </button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="reward-modal-button form-control btn btn-sm btn-primary btn-hover" wire:click="closeModal">Confirm</button>
                     </div>
                 </div>
             </div>

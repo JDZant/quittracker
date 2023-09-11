@@ -33,44 +33,44 @@ class CurrentAttemptController extends Controller
 
         $activeAttempt = $baseQuery->whereNull('end_date')->first();
 
-        $nextReward = $activeAttempt
-            ->rewards
-            ->filter(function ($reward) {
-                return Carbon::parse($reward->date)->isToday() || Carbon::parse($reward->date)->isFuture();
-            })
-            ->sortBy('date')
-            ->first();
-
-        if ($nextReward) {
-            $nextRewardDate = $nextReward->date;
-        } else {
-            $nextRewardDate = 0;
-        }
-
-        $quitAttemptStartDate = $activeAttempt->start_date;
-        $totalPeriod = Carbon::parse($nextRewardDate)->diffInDays($quitAttemptStartDate);
-        $elapsedTime = now()->diffInDays($quitAttemptStartDate);
-
-        $progress = round(($elapsedTime / $totalPeriod) * 100, 2);
-
-        $daysLeft = $totalPeriod - $elapsedTime;
-
         if (isset($activeAttempt)) {
+            $nextReward = $activeAttempt
+                ->rewards
+                ->filter(function ($reward) {
+                    return Carbon::parse($reward->date)->isToday() || Carbon::parse($reward->date)->isFuture();
+                })
+                ->sortBy('date')
+                ->first();
+
+            if ($nextReward) {
+                $nextRewardDate = $nextReward->date;
+            } else {
+                $nextRewardDate = 0;
+            }
+
+            $quitAttemptStartDate = $activeAttempt->start_date;
+            $totalPeriod = Carbon::parse($nextRewardDate)->diffInDays($quitAttemptStartDate);
+            $elapsedTime = now()->diffInDays($quitAttemptStartDate);
+
+            $progress = round(($elapsedTime / $totalPeriod) * 100, 2);
+
+            $daysLeft = $totalPeriod - $elapsedTime;
+
             $metrics = $this->calculateSmokingData($activeAttempt);
         }
 
         return view('pages.current-attempt.current-attempt', [
             'quitAttempts' => QuitAttempt::with('smokingData', 'reasons')->paginate(25),
-            'activeAttempt' => $activeAttempt,
+            'activeAttempt' => $activeAttempt ?? null,
             'daysStopped' => $this->daysStopped,
             'cigarettesNotSmokedSince' => $metrics['cigarettesNotSmokedSince'] ?? 0,
             'nicotineNotInhaledSince' => $metrics['nicotineNotInhaledSince'] ?? 0,
             'tarNotInhaledSince' => $metrics['tarNotInhaledSince'] ?? 0,
             'packetsNotBoughtSince' => $metrics['packetsNotBoughtSince'] ?? 0,
             'moneyNotSpentOnCigarettesSince' => $metrics['moneyNotSpentOnCigarettesSince'] ?? 0,
-            'progress' => $progress,
-            'daysLeft' => $daysLeft,
-            'nextReward' => $nextReward
+            'progress' => $progress ?? null,
+            'daysLeft' => $daysLeft  ?? null,
+            'nextReward' => $nextReward  ?? null
         ]);
     }
 

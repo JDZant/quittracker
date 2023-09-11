@@ -5,20 +5,23 @@
         <div class="container col-md-12 ">
             <div class="d-flex">
                 <div class=" mt-3 d-flex w-100">
-                    <div class="d-flex flex-column w-100">
-                        <h3>{{ $daysLeft }} days left until you can reward yourself with "<strong>{{ $nextReward->name }}</strong>"</h3>
-                        <h4>Progress</h4>
-                        <div class="progress d-flex w-100" style="height: 1.5rem;!important">
-                            <div class="progress-bar progress-bar-striped"
-                                 role="progressbar"
-                                 style="width:{{ $progress . '%' }}"
-                                 aria-valuenow="25"
-                                 aria-valuemin="0"
-                                 aria-valuemax="100">
-                                {{ $progress }}%
+                    @if($nextReward)
+                        <div class="d-flex flex-column w-100">
+                            <h3>{{ $daysLeft }} days left until you can reward yourself with
+                                "<strong>{{ $nextReward?->name }}</strong>"</h3>
+                            <h4>Progress</h4>
+                            <div class="progress d-flex w-100" style="height: 1.5rem;!important">
+                                <div class="progress-bar progress-bar-striped"
+                                     role="progressbar"
+                                     style="width:{{ $progress . '%' }}"
+                                     aria-valuenow="25"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    {{ $progress }}%
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <div class="row">
@@ -164,7 +167,7 @@
                 <div class="text-center mt-3">
                     <a href="{{ route('quit-attempts.create') }}">
                         <button
-                            {{ $activeAttempt ? 'disabled' : '' }} class="btn bg-blue-custom text-white btn-hover btn-lg">
+                            {{ $activeAttempt ? 'disabled' : '' }} class="btn btn-orange btn-lg">
                             Lets start!
                         </button>
                     </a>

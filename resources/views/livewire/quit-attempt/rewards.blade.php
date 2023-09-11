@@ -21,7 +21,7 @@
     <div class="d-flex flex-wrap justify-content-center">
         @foreach($timeLine as $date)
             <div wire:click="setModalData('{{ $date }}')"
-                 class="calendar-item mb-3 mr-3 p-5 col-2 text-center {{ in_array($date->toDateString(), $this->rewardDates) ? 'bg-primary' : '' }}"
+                 class="calendar-item mb-3 mr-3 p-5 col-2 text-center {{ in_array($date->toDateString(), $this->rewardDates) ? 'bg-orange text-white' : '' }}"
                  data-toggle="modal"
                  data-target="#addRewardModal">
                 <div>

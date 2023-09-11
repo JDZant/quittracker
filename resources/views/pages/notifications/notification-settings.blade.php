@@ -67,7 +67,7 @@
                             @enderror
                         </div>
                         <div class="w-100 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-orange">
                                 {{ __('Save') }}
                             </button>
                         </div>
