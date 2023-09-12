@@ -170,9 +170,9 @@ return [
     'classes_auth_card' => 'card-outline',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
+    'classes_auth_footer' => 'text-white',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-flat btn-orange',
 
     /*
     |--------------------------------------------------------------------------
@@ -304,7 +304,7 @@ return [
                     'icon' => 'fas fa-info-circle',
                 ],
                 [
-                    'text' => 'Add rewards',
+                    'text' => 'Rewards',
                     'url' => "rewards",
                     'icon' => 'fas fa-gift',
                 ],

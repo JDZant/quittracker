@@ -3,11 +3,14 @@
 namespace App\Http\Livewire\Modals;
 
 use App\Models\Reward;
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 class AddRewardModal extends Component
 {
     public string $date;
+    public array $daysOfWeek;
+    public $selectedDay;
     public string $message;
     public string $rewardName;
     public int $quitAttemptId;
@@ -25,6 +28,30 @@ class AddRewardModal extends Component
         $this->quitAttemptId = $quitAttemptId;
         $this->rewards = $rewards;
         $this->showModal = true;
+        $this->setDaysOfWeek();
+    }
+
+    public function setSelectedDay($day) {
+        $this->selectedDay = $day;
+        $this->render();
+    }
+
+    public function setDaysOfWeek(): void
+    {
+        $selectedDate = Carbon::parse($this->date);
+        $endOfSelectedWeek = $selectedDate->copy()->endOfWeek();
+
+        // Check if the selected date is in the current week
+        if ($selectedDate->weekOfYear == Carbon::now()->weekOfYear) {
+            $remainingDaysOfTheWeek = $endOfSelectedWeek->diffInDays(now());
+            for ($i = 0; $i <= $remainingDaysOfTheWeek; $i++) {
+                $this->daysOfWeek[] = $selectedDate->copy()->addDays($i)->format('d-m-Y');
+            }
+        } else {
+            for ($i = 0; $i < 7; $i++) {
+                $this->daysOfWeek[] = $selectedDate->copy()->startOfWeek()->addDays($i)->format('d-m-Y');
+            }
+        }
     }
 
     public function closeModal()
@@ -35,11 +62,11 @@ class AddRewardModal extends Component
 
     public function addReward(): void
     {
-        if ($this->rewardName && $this->quitAttemptId && $this->date) {
+        if ($this->rewardName && $this->quitAttemptId && $this->selectedDay) {
             $newReward = Reward::create([
                 'name' => $this->rewardName,
                 'quit_attempt_id' => $this->quitAttemptId,
-                'date' => $this->date
+                'date' => Carbon::parse($this->selectedDay)
             ]);
             $this->rewards[] = $newReward;
         }

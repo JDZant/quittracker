@@ -11,9 +11,9 @@
                                 "<strong>{{ $nextReward?->name }}</strong>"</h3>
                             <h4>Progress</h4>
                             <div class="progress d-flex w-100" style="height: 1.5rem;!important">
-                                <div class="progress-bar progress-bar-striped"
+                                <div class="bg-orange text-white progress-bar progress-bar-striped"
                                      role="progressbar"
-                                     style="width:{{ $progress . '%' }}"
+                                     style=" width:{{ $progress . '%' }}"
                                      aria-valuenow="25"
                                      aria-valuemin="0"
                                      aria-valuemax="100">
@@ -167,7 +167,7 @@
                 <div class="text-center mt-3">
                     <a href="{{ route('quit-attempts.create') }}">
                         <button
-                            {{ $activeAttempt ? 'disabled' : '' }} class="btn btn-orange btn-lg">
+                            {{ $activeAttempt ? 'disabled' : '' }} class="form-button btn btn-lg">
                             Lets start!
                         </button>
                     </a>

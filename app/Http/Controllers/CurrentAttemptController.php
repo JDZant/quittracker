@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\QuitAttempt;
+use App\Models\Reward;
 use App\Traits\CalculatedSmokingData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -51,8 +52,10 @@ class CurrentAttemptController extends Controller
             $quitAttemptStartDate = $activeAttempt->start_date;
             $totalPeriod = Carbon::parse($nextRewardDate)->diffInDays($quitAttemptStartDate);
             $elapsedTime = now()->diffInDays($quitAttemptStartDate);
-
-            $progress = round(($elapsedTime / $totalPeriod) * 100, 2);
+            if($totalPeriod)
+            {
+                $progress = round(($elapsedTime / $totalPeriod) * 100, 2);
+            }
 
             $daysLeft = $totalPeriod - $elapsedTime;
 
@@ -78,6 +81,7 @@ class CurrentAttemptController extends Controller
     {
         $attempt->end_date = Carbon::now();
         $attempt->save();
+        Reward::whereQuitAttemptId($attempt->id)->delete();
         return redirect()->back();
     }
 

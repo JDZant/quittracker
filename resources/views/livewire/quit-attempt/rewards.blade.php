@@ -5,7 +5,7 @@
                 <h1>Rewards</h1>
             </div>
             <div class="d-flex justify-content-center w-100">
-                <h4>Select a {{ $scale }} to set add rewards</h4>
+                <h4>Select a {{ $scale }} to add rewards</h4>
             </div>
         </div>
         <div class="d-flex flex-column">

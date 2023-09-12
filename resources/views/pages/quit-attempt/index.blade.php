@@ -58,7 +58,7 @@
                                     @endif
                                     <td>
                                         @if(!is_null($quitAttempt->end_date))
-                                            <span class="badge bg-danger p-2">Failed</span>
+                                            <span class="badge bg-orange text-white p-2">Failed</span>
                                         @else
                                             <span class="badge bg-success p-2">Ongoing</span>
                                         @endif

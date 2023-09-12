@@ -71,7 +71,7 @@ class Rewards extends Component
         $date = Carbon::parse($date);
         $message = null;
         if($this->scale == 'week'){
-            $message = 'Add a reward for week ' . $date->week;
+            $message = 'Select a day to add a reward';
         }
         if($this->scale == 'month'){
             $message = 'Add a reward for ' . $date->format('d F Y');
@@ -83,7 +83,6 @@ class Rewards extends Component
         $date = $date->format('Y-m-d');
 
         $rewards = Reward::whereQuitAttemptId($this->quitAttempt->id)->whereDate('date', $date)->get();
-
 
         $this->emit('set-modal', $message, $date, $this->quitAttempt->id, $rewards);
 
