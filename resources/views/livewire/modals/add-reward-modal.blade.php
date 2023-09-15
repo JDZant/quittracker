@@ -9,19 +9,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="d-flex flex-column">
-                        <div class="d-flex">
+                    <div class="d-flex flex-column w-100">
+                        <div class="d-flex just">
                             <h5 class="modal-title" id="failModalLabel">{{ $message }}</h5>
-                            <button type="button" wire:click="closeModal" class="close text-white" aria-label="Close">
+                            <button type="button" class="close text-white" wire:click="closeModal" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
-                        <div class="d-flex justify-content-center p-2">
+                        <div class="d-flex p-2">
                             @if($daysOfWeek)
                                 <div class="row">
                                     @foreach($daysOfWeek as $day)
-                                        <div class="col-md-3 p-1">
+                                        <div class="{{ \Carbon\Carbon::parse($day)->week === \Carbon\Carbon::now()->week ? 'col-md-4' : 'col-md-3' }}  p-1 ">
                                             <button wire:click="setSelectedDay('{{$day}}')"
                                                     class="btn date-button {{ $day == $selectedDay ? 'btn-selected border-white text-white' : 'btn-orange' }}">
                                                 {{\Carbon\Carbon::parse($day)->format('l')}}
@@ -31,26 +31,35 @@
                                 </div>
                             @endif
                         </div>
-
+                        @if($selectedDay)
+                            <div>
+                                <label>Add new reward</label>
+                                <div class="d-flex justify-content-between">
+                                    <input wire:keydown.enter="addReward" wire:model="rewardName" name="name"
+                                           class="form-control">
+                                    <button wire:click="addReward"
+                                            class="reward-modal-button btn btn-sm ml-2 bg-blue-custom btn-hover text-white">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                 </div>
                 @if($selectedDay || $this->rewards)
                     <div>
                         <div class="modal-body">
-                            <div id="rewards" class="d-flex flex-column pb-3 border-bottom mb-3">
+                            <div id="rewards" class="d-flex flex-column pb-3 border-bottom mb-3 reward-scrollbar pr-2">
                                 @forelse($rewards as $reward)
-                                    <div class="d-flex justify-content-between pb-2">
+                                    <div class="d-flex justify-content-between text-black-50 bg-light-gray p-3 mt-3 rounded pb-2">
                                         <div class="d-flex flex-column">
                                             <div>
                                                 <strong class="text-orange">
-                                                    Reward:
-                                                </strong> {{$reward['name']}}
+                                         {{ \Carbon\Carbon::parse($reward['date'])->format('l d-m') }}       </strong>
                                             </div>
                                             <div>
-                                                <strong class="text-orange">
-                                                    Date:
-                                                </strong> {{ \Carbon\Carbon::parse($reward['date'])->format('d-m-Y') }}
+                                                <strong>{{$reward['name']}}</strong>
                                             </div>
                                         </div>
                                         <div wire:click="deleteReward({{$reward['id']}})" class="cursor-pointer">
@@ -61,17 +70,13 @@
                                     No planned rewards...
                                 @endforelse
                             </div>
-                            <label>Add new reward</label>
-                            <div class="d-flex justify-content-between">
-                                <input wire:keydown.enter="addReward" wire:model="rewardName" name="name"
-                                       class="form-control">
-                                <button wire:click="addReward"
-                                        class="reward-modal-button btn btn-sm ml-2 bg-blue-custom btn-hover text-white">
-                                    Add
-                                </button>
-                            </div>
                         </div>
                     </div>
+                @if($selectedDay)
+                    <div class="w-100 d-flex justify-content-end pb-3 pr-3 ">
+                        <button class="btn-orange btn" wire:click="closeModal">Done</button>
+                    </div>
+                    @endif
                 @endif
             </div>
         </div>

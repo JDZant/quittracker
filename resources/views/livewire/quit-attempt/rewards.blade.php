@@ -18,10 +18,11 @@
             </label>
         </div>
     </div>
+
     <div class="d-flex flex-wrap justify-content-center">
         @foreach($timeLine as $date)
             <div wire:click="setModalData('{{ $date }}')"
-                 class="calendar-item mb-3 mr-3 p-5 col-2 text-center {{ in_array($date->toDateString(), $this->rewardDates) ? 'bg-orange text-white' : '' }}"
+                 class="calendar-item mb-3 mr-3 p-5 col-2 text-center {{ in_array($date->week, $this->rewardDates) ? 'bg-orange text-white' : '' }}"
                  data-toggle="modal"
                  data-target="#addRewardModal">
                 <div>
@@ -35,11 +36,6 @@
                 </div>
             </div>
         @endforeach
-    </div>
-    <div class="d-flex flex-row justify-content-end ">
-        <div class="">
-            <button class="btn btn-success rewards-btn">Done!</button>
-        </div>
     </div>
     @include('modals.add-reward')
 </div>

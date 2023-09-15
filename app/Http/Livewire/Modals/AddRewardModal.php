@@ -31,9 +31,10 @@ class AddRewardModal extends Component
         $this->setDaysOfWeek();
     }
 
+    //TODO this is quickfix. SelectedDay and should be stored in the same variable
     public function setSelectedDay($day) {
-        $this->selectedDay = $day;
-        $this->render();
+        $this->selectedDay = $this->selectedDay === $day ? null : $day;
+        $this->date = $day;
     }
 
     public function setDaysOfWeek(): void
@@ -66,7 +67,7 @@ class AddRewardModal extends Component
             $newReward = Reward::create([
                 'name' => $this->rewardName,
                 'quit_attempt_id' => $this->quitAttemptId,
-                'date' => Carbon::parse($this->selectedDay)
+                'date' => Carbon::parse($this->date)->format('Y-m-d')
             ]);
             $this->rewards[] = $newReward;
         }

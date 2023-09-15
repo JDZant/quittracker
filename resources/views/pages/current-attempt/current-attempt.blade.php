@@ -34,7 +34,7 @@
                             <div class="row justify-content-between mb-3">
                                 <h3>Stopped since</h3>
                                 {{--Temporary button--}}
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                <button type="button" class="btn btn-orange" data-toggle="modal"
                                         data-target="#failModal">I failed
                                 </button>
                             </div>
