@@ -34,9 +34,10 @@ class Rewards extends Component
     public function setRewardDates(): void
     {
         foreach ($this->rewards as $reward) {
-            $this->rewardDates[] = Carbon::parse($reward->date)->week;
+            $this->rewardDates[] = Carbon::parse($reward->date)->weekOfYear;
         }
     }
+
 
     public function setTimeLine(): void
     {

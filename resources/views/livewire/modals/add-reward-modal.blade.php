@@ -8,29 +8,27 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="p-3">
                     <div class="d-flex flex-column w-100">
-                        <div class="d-flex just">
+                        <div class="d-flex justify-content-between">
                             <h5 class="modal-title" id="failModalLabel">{{ $message }}</h5>
-                            <button type="button" class="close text-white" wire:click="closeModal" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+
                         </div>
 
-                        <div class="d-flex p-2">
-                            @if($daysOfWeek)
-                                <div class="row">
-                                    @foreach($daysOfWeek as $day)
-                                        <div class="{{ \Carbon\Carbon::parse($day)->week === \Carbon\Carbon::now()->week ? 'col-md-4' : 'col-md-3' }}  p-1 ">
-                                            <button wire:click="setSelectedDay('{{$day}}')"
-                                                    class="btn date-button {{ $day == $selectedDay ? 'btn-selected border-white text-white' : 'btn-orange' }}">
-                                                {{\Carbon\Carbon::parse($day)->format('l')}}
-                                            </button>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
+                        @if($daysOfWeek)
+                            <div class="row p-3">
+                                @foreach($daysOfWeek as $day)
+                                    <div
+                                        class="{{ \Carbon\Carbon::parse($day)->week === \Carbon\Carbon::now()->week ? 'col-md-3' : 'col-md-3' }}  p-1 ">
+                                        <button wire:click="setSelectedDay('{{$day}}')"
+                                                class="btn date-button {{ $day == $selectedDay ? 'btn-selected border-white text-white' : 'btn-orange' }}">
+                                            {{\Carbon\Carbon::parse($day)->format('l')}}
+                                        </button>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
                         @if($selectedDay)
                             <div>
                                 <label>Add new reward</label>
@@ -50,13 +48,15 @@
                 @if($selectedDay || $this->rewards)
                     <div>
                         <div class="modal-body">
-                            <div id="rewards" class="d-flex flex-column pb-3 border-bottom mb-3 reward-scrollbar pr-2">
+                            <div id="rewards"
+                                 class="d-flex flex-column pb-3 border-bottom border-top reward-scrollbar {{ count($rewards) >= 4 ? 'pr-2' : '' }}">
                                 @forelse($rewards as $reward)
-                                    <div class="d-flex justify-content-between text-black-50 bg-light-gray p-3 mt-3 rounded pb-2">
+                                    <div
+                                        class="d-flex justify-content-between text-black-50 bg-light-gray p-3 mt-3 rounded pb-2">
                                         <div class="d-flex flex-column">
                                             <div>
                                                 <strong class="text-orange">
-                                         {{ \Carbon\Carbon::parse($reward['date'])->format('l d-m') }}       </strong>
+                                                    {{ \Carbon\Carbon::parse($reward['date'])->format('l d-m') }}       </strong>
                                             </div>
                                             <div>
                                                 <strong>{{$reward['name']}}</strong>
@@ -72,12 +72,11 @@
                             </div>
                         </div>
                     </div>
-                @if($selectedDay)
-                    <div class="w-100 d-flex justify-content-end pb-3 pr-3 ">
-                        <button class="btn-orange btn" wire:click="closeModal">Done</button>
-                    </div>
-                    @endif
+
                 @endif
+                <div class="w-100 d-flex justify-content-end pb-3 pr-3 ">
+                    <button class="btn-confirm btn" wire:click="closeModal">Done</button>
+                </div>
             </div>
         </div>
     </div>

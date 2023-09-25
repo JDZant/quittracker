@@ -7,9 +7,19 @@
                 <div class=" mt-3 d-flex w-100">
                     @if($nextReward)
                         <div class="d-flex flex-column w-100">
-                            <h3>{{ $daysLeft }} days left until you can reward yourself with
-                                "<strong>{{ $nextReward?->name }}</strong>"</h3>
-                            <h4>Progress</h4>
+                            @if($nextReward->date === \Carbon\Carbon::now()->format('Y-m-d'))
+                                <div class="d-flex flex-column">
+                                    <div class="d-flex justify-content-between">
+                                        <h1 class="text-orange">Congratulations! You have earned a reward!</h1>
+                                        <button class="btn-gold rounded btn btn-lg text-white">Claim reward</button>
+                                    </div>
+                                    <h3>Your progress bar reached 100%!</h3>
+                                </div>
+                            @else
+                                <h3>{{ $daysLeft }} days left until you can reward yourself with
+                                    "<strong>{{ $nextReward?->name }}</strong>"</h3>
+                                <h4>Progress</h4>
+                            @endif
                             <div class="progress d-flex w-100" style="height: 1.5rem;!important">
                                 <div class="bg-orange text-white progress-bar progress-bar-striped"
                                      role="progressbar"
