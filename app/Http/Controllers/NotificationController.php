@@ -54,11 +54,12 @@ class NotificationController extends Controller
         return redirect()->back()->with('success', 'Notification settings updated successfully.');
     }
 
-    public function sendEmailNotification()
+    public function sendEmailNotification(): \Illuminate\Http\RedirectResponse
     {
         $user = Auth::user();
         $recipientEmail = $user->email;
         $quitAttempt = QuitAttempt::whereUserId($user->id)->first();
+
         $smokingData = $this->calculateSmokingData($quitAttempt);
 
         $content = [

@@ -55,6 +55,11 @@ class AddRewardModal extends Component
         }
     }
 
+    public function isDateToday($day): string
+    {
+        return Carbon::parse($day)->format('d-m-Y') ===  Carbon::now()->format('d-m-Y') ? 'disabled' : '';
+    }
+
     public function closeModal()
     {
         $this->showModal = false;

@@ -11,7 +11,7 @@
                                 <div class="d-flex flex-column">
                                     <div class="d-flex justify-content-between">
                                         <h1 class="text-orange">Congratulations! You have earned a reward!</h1>
-                                        <button class="btn-gold rounded btn btn-lg text-white">Claim reward</button>
+                                        <button data-target="#claimReward" data-toggle="modal" class="btn-gold rounded btn btn-lg text-white">Claim reward</button>
                                     </div>
                                     <h3>Your progress bar reached 100%!</h3>
                                 </div>
@@ -170,6 +170,7 @@
             </div>
         </div>
         @include('modals.confirm')
+        @include('modals.claim-reward', $activeAttempt)
 
     @else
         <div class="row justify-content-center">

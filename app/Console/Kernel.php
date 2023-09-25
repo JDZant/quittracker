@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // This example schedules the email sending task to run daily. Adjust as per your needs.
+        $schedule->command('notifications:send')->daily();
     }
 
     /**

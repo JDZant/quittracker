@@ -20,10 +20,7 @@
     </div>
 
     <div class="d-flex flex-wrap justify-content-center">
-        {{--        @dump($this->rewardDates)--}}
         @foreach($timeLine as $date)
-            {{--            @dump($date->week)--}}
-            {{--TODO Check logic! Orange coler not corresponding with correct week.--}}
             <div wire:click="setModalData('{{ $date }}')"
                  class="calendar-item mb-3 mr-3 p-5 col-2 text-center {{ in_array($date->weekOfYear, $this->rewardDates) ? 'bg-orange text-white' : '' }}"
                  data-toggle="modal"

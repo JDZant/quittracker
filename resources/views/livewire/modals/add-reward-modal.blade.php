@@ -12,23 +12,21 @@
                     <div class="d-flex flex-column w-100">
                         <div class="d-flex justify-content-between">
                             <h5 class="modal-title" id="failModalLabel">{{ $message }}</h5>
-
                         </div>
-
                         @if($daysOfWeek)
                             <div class="row p-3">
                                 @foreach($daysOfWeek as $day)
                                     <div
-                                        class="{{ \Carbon\Carbon::parse($day)->week === \Carbon\Carbon::now()->week ? 'col-md-3' : 'col-md-3' }}  p-1 ">
+                                        class="{{ \Carbon\Carbon::parse($day)->week === \Carbon\Carbon::now()->week ? 'col-md-3' : 'col-md-3' }} {{  $this->isDateToday($day) }}  p-1 ">
                                         <button wire:click="setSelectedDay('{{$day}}')"
-                                                class="btn date-button {{ $day == $selectedDay ? 'btn-selected border-white text-white' : 'btn-orange' }}">
+                                                class="btn date-button {{ $day == $selectedDay ? 'btn-selected border-white text-white' : 'btn-orange' }}"
+                                            {{ $this->isDateToday($day) === 'disabled' ? 'disabled' : '' }}>
                                             {{\Carbon\Carbon::parse($day)->format('l')}}
                                         </button>
                                     </div>
                                 @endforeach
                             </div>
                         @endif
-
                         @if($selectedDay)
                             <div>
                                 <label>Add new reward</label>

@@ -52,9 +52,10 @@ class CurrentAttemptController extends Controller
             $quitAttemptStartDate = $activeAttempt->start_date;
             $totalPeriod = Carbon::parse($nextRewardDate)->diffInDays($quitAttemptStartDate);
             $elapsedTime = now()->diffInDays($quitAttemptStartDate);
+
             if($totalPeriod)
             {
-                $progress = round(($elapsedTime / $totalPeriod) * 100, 2);
+                $progress = $elapsedTime === 0 ? 0 : round(($elapsedTime / $totalPeriod) * 100, 2);
             }
 
             $daysLeft = $totalPeriod - $elapsedTime;
