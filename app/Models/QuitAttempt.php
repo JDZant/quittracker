@@ -11,13 +11,19 @@ class QuitAttempt extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /*
+     * Attributes
+     * */
+
     protected $fillable = [
         'start_date',
         'end_date',
         'user_id'
     ];
 
-    //relations
+    /*
+     * Relations
+     * */
     public function reasons(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Reason::class);
@@ -33,7 +39,9 @@ class QuitAttempt extends Model
         return $this->hasMany(Reward::class);
     }
 
-    //attributes
+    /*
+     *
+     * */
     public function getFormattedStartDateAttribute(): string
     {
         return Carbon::parse($this->start_date)->format('d-m-Y');
@@ -42,6 +50,10 @@ class QuitAttempt extends Model
     public function getFormattedEndDateAttribute(): ?string
     {
         return $this->end_date ? Carbon::parse($this->end_date)->format('d-m-Y') : null;
+    }
+
+    public function getCurrentQuitAttemptAttribute(){
+        return QuitAttempt::whereNull('end_date')->first();
     }
 
 

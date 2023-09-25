@@ -1,8 +1,12 @@
 <div class="w-100">
     <div class="d-flex justify-content-between p-3">
-        <div class="d-flex flex-column">
-            <h1>Rewards</h1>
-            <h4>Select a {{ $scale }} to set add rewards</h4>
+        <div class="d-flex flex-column w-100">
+            <div class=" d-flex justify-content-center">
+                <h1>Rewards</h1>
+            </div>
+            <div class="d-flex justify-content-center w-100">
+                <h4>Select a {{ $scale }} to add rewards</h4>
+            </div>
         </div>
         <div class="d-flex flex-column">
             <label>
@@ -14,10 +18,11 @@
             </label>
         </div>
     </div>
-    <div class="d-flex flex-wrap justify-content-start">
+
+    <div class="d-flex flex-wrap justify-content-center">
         @foreach($timeLine as $date)
             <div wire:click="setModalData('{{ $date }}')"
-                 class="calendar-item mb-3 mr-3 p-5 col-2 text-center {{ in_array($date->toDateString(), $this->rewardDates) ? 'bg-success' : '' }}"
+                 class="calendar-item mb-3 mr-3 p-5 col-2 text-center {{ in_array($date->weekOfYear, $this->rewardDates) ? 'bg-orange text-white' : '' }}"
                  data-toggle="modal"
                  data-target="#addRewardModal">
                 <div>

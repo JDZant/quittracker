@@ -18,9 +18,9 @@ class Reason extends Model
     ];
 
     //attributes
-    public function getTypeAttribute(): string
+/*    public function getTypeAttribute(): string
     {
         return self::TYPES[$this->type];
-    }
+    }*/
 
 }

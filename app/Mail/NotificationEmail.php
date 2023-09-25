@@ -20,7 +20,7 @@ class NotificationEmail extends Mailable
     public function build(): NotificationEmail
     {
         return $this->subject('Notification Email')
-            ->view('emails.smoking-data')
+            ->markdown('emails.smoking-data') // Changed 'view' to 'markdown'
             ->with(['content' => $this->content]);
     }
 }

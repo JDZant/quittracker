@@ -131,7 +131,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => '',
     'usermenu_image' => false,
     'usermenu_desc' => false,
     'usermenu_profile_url' => false,
@@ -170,9 +170,9 @@ return [
     'classes_auth_card' => 'card-outline',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
+    'classes_auth_footer' => 'text-white',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-flat btn-orange',
 
     /*
     |--------------------------------------------------------------------------
@@ -291,22 +291,38 @@ return [
 
     'menu' => [
         [
-            'text' => 'Current attempt',
-            'url'  => 'current-attempt',
+            'header' => 'Personal',
+        ],
+        [
+            'text' => 'Active Attempt',
+            'url' => 'current-attempt',
             'icon' => 'fas fa-smoking-ban',
+            'submenu' => [
+                [
+                    'text' => 'My stats',
+                    'url' => "current-attempt",
+                    'icon' => 'fas fa-info-circle',
+                ],
+                [
+                    'text' => 'Rewards',
+                    'url' => "rewards",
+                    'icon' => 'fas fa-gift',
+                ],
+            ]
+        ],
+        [
+            'header' => 'Settings',
         ],
         [
             'text' => 'My attempts',
-            'url'  => 'quit-attempts',
+            'url' => 'quit-attempts',
             'icon' => 'fas fa-list',
         ],
         [
             'text' => 'Notifications',
-            'url'  => 'notification-settings',
+            'url' => 'notification-settings',
             'icon' => 'fas fa-bell',
         ],
-
-
     ],
 
     /*

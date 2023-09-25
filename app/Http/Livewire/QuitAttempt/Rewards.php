@@ -34,25 +34,31 @@ class Rewards extends Component
     public function setRewardDates(): void
     {
         foreach ($this->rewards as $reward) {
-            $this->rewardDates[] = $reward->date;
+            $this->rewardDates[] = Carbon::parse($reward->date)->weekOfYear;
         }
     }
+
 
     public function setTimeLine(): void
     {
         $this->startDate = now();
         $currentDate = $this->startDate->copy();
+
         if($this->scale === 'year'){
             $this->endDate = $this->startDate->copy()->endOfYear()->addYears(4);
         } else {
             $this->endDate = $this->startDate->copy()->endOfYear();
         }
+
         $this->timeLine = [];
+
         if ($this->scale == 'week') {
             while ($currentDate->lessThanOrEqualTo($this->endDate)) {
+
                 $this->timeLine[] = $currentDate->copy();
                 $currentDate->addWeek();
             }
+
         } elseif ($this->scale == 'month') {
             while ($currentDate->lessThanOrEqualTo($this->endDate)) {
                 $this->timeLine[] = $currentDate->copy();
@@ -68,24 +74,21 @@ class Rewards extends Component
 
     public function setModalData($date): void
     {
-        $date = Carbon::parse($date);
+        $dateObj = Carbon::parse($date);
         $message = null;
+        $startOfWeek = $dateObj->copy()->startOfWeek();
+        $endOfWeek = $dateObj->copy()->endOfWeek();
+
         if($this->scale == 'week'){
-            $message = 'Add a reward for week ' . $date->week;
-        }
-        if($this->scale == 'month'){
-            $message = 'Add a reward for ' . $date->format('d F Y');
-        }
-        if($this->scale == 'year'){
-            $message = 'Set a rewards for end of year ' . $date->format('Y');
+            $message = 'Select a day to add a reward';
+            $rewards = Reward::whereQuitAttemptId($this->quitAttempt->id)
+                ->whereBetween('date', [$startOfWeek->toDateString(), $endOfWeek->toDateString()])
+                ->get();
         }
 
-        $date = $date->format('Y-m-d');
+        $formattedDate = $dateObj->toDateString();
 
-        $rewards = Reward::whereQuitAttemptId($this->quitAttempt->id)->whereDate('date', $date)->get();
-
-        $this->emit('set-modal', $message, $date, $this->quitAttempt->id, $rewards);
-
+        $this->emit('set-modal', $message, $formattedDate, $this->quitAttempt->id, $rewards);
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application

@@ -2,7 +2,38 @@
 
 @section('content')
     @if($activeAttempt)
-        <div class="container col-12">
+        <div class="container col-md-12 ">
+            <div class="d-flex">
+                <div class=" mt-3 d-flex w-100">
+                    @if($nextReward)
+                        <div class="d-flex flex-column w-100">
+                            @if($nextReward->date === \Carbon\Carbon::now()->format('Y-m-d'))
+                                <div class="d-flex flex-column">
+                                    <div class="d-flex justify-content-between">
+                                        <h1 class="text-orange">Congratulations! You have earned a reward!</h1>
+                                        <button data-target="#claimReward" data-toggle="modal" class="btn-gold rounded btn btn-lg text-white">Claim reward</button>
+                                    </div>
+                                    <h3>Your progress bar reached 100%!</h3>
+                                </div>
+                            @else
+                                <h3>{{ $daysLeft }} days left until you can reward yourself with
+                                    "<strong>{{ $nextReward?->name }}</strong>"</h3>
+                                <h4>Progress</h4>
+                            @endif
+                            <div class="progress d-flex w-100" style="height: 1.5rem;!important">
+                                <div class="bg-orange text-white progress-bar progress-bar-striped"
+                                     role="progressbar"
+                                     style=" width:{{ $progress . '%' }}"
+                                     aria-valuenow="25"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    {{ $progress }}%
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mt-3">
@@ -10,9 +41,12 @@
                             <h5>{{ __('Current attempt') }}</h5>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between mb-3">
+                            <div class="row justify-content-between mb-3">
                                 <h3>Stopped since</h3>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#failModal">I failed</button>
+                                {{--Temporary button--}}
+                                <button type="button" class="btn btn-orange" data-toggle="modal"
+                                        data-target="#failModal">I failed
+                                </button>
                             </div>
 
                             <div class="table-responsive">
@@ -54,7 +88,7 @@
                             <h5>{{ __('Total attempts') }}</h5>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-center">
+                            <div class="row justify-content-center">
                                 <h1>{{ $quitAttempts->total() }}</h1>
                             </div>
                         </div>
@@ -73,7 +107,7 @@
                                 <table class="table table-striped table-bordered">
                                     <tbody>
                                     <tr>
-                                        <td>Cigarettes Per Day</td>
+                                        <td>Cigarettes Per day</td>
                                         <td>{{ $activeAttempt->smokingData->cigarettes_per_day }}</td>
                                     </tr>
                                     <tr>
@@ -136,19 +170,22 @@
             </div>
         </div>
         @include('modals.confirm')
+        @include('modals.claim-reward', $activeAttempt)
 
     @else
-        <div class="d-flex justify-content-center">
+        <div class="row justify-content-center">
             <div class="col-2">
                 <div class="text-center mt-3">
                     <a href="{{ route('quit-attempts.create') }}">
-                        <button {{ $activeAttempt ? 'disabled' : '' }} class="btn bg-blue-custom text-white btn-hover btn-lg">Lets start!</button>
+                        <button
+                            {{ $activeAttempt ? 'disabled' : '' }} class="form-button btn btn-lg">
+                            Lets start!
+                        </button>
                     </a>
                 </div>
             </div>
         </div>
     @endif
-
 
 @endsection
 

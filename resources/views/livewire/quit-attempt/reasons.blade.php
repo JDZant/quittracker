@@ -12,12 +12,12 @@
                             </div>
                             @if($key > 0)
                                 <div wire:click="remove({{$key}})" class="position-absolute" style="right: 10px; top: 42%; transform: translateY(-50%);">
-                                    <i style="color:#8f8f8f; cursor:pointer;" class="far fa-minus-square"></i>
+                                    <i style="color:#8f8f8f; cursor:pointer;" class="far text-orange fa-minus-square"></i>
                                 </div>
                             @endif
                         </div>
                     @endforeach
-                    <button wire:click.prevent="add" class="btn ml-auto text-blue">
+                    <button wire:click.prevent="add" class="btn outline-none ml-auto text-blue btn-outline-0 scale-up">
                         {{ __('reasons.buttons.add') }}
                     </button>
                 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QuitAttemptRequest;
 use App\Models\QuitAttempt;
 use App\Models\Reason;
+use App\Models\Reward;
 use App\Models\SmokingData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -83,7 +84,9 @@ class QuitAttemptController extends Controller
      */
     public function destroy(string $id)
     {
-        QuitAttempt::findOrFail($id)->delete();
+        $quitAttempt = QuitAttempt::findOrFail($id)->delete();
+
+        Reward::whereQuitAttemptId($quitAttempt->id)->delete();
 
         return redirect()->route('quit-attempts.index')->with('status', 'Deleted quit attempt');
     }

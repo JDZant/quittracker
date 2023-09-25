@@ -1,6 +1,5 @@
 <div>
-    <div wire:ignore.self class="modal fade {{ $showModal ? 'show d-block' : '' }}"
-         id="addRewardModal"
+    <div class="modal fade {{ $showModal ? 'show d-block' : '' }}"
          tabindex="-1"
          role="dialog"
          aria-labelledby="failModalLabel"
@@ -9,42 +8,89 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="failModalLabel">{{ $message }}</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div>
-                    <div class="modal-body">
-                        <div id="rewards" class="d-flex flex-column pb-3 border-bottom mb-3">
-                            @if($rewards)
-                                <label>Planned rewards</label>
-                            @endif
-                            @forelse($rewards as $reward)
-                                <div class="d-flex justify-content-between pb-2">
-                                    <div class="">
-                                        {{$reward['name']}}
+                <div class="p-3">
+                    <div class="d-flex flex-column w-100">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="modal-title" id="failModalLabel">{{ $message }}</h5>
+                        </div>
+                        @if($daysOfWeek)
+                            <div class="row p-3">
+                                @foreach($daysOfWeek as $day)
+                                    <div
+                                        class="{{ \Carbon\Carbon::parse($day)->week === \Carbon\Carbon::now()->week ? 'col-md-3' : 'col-md-3' }} {{  $this->isDateToday($day) }}  p-1 ">
+                                        <button wire:click="setSelectedDay('{{$day}}')"
+                                                class="btn date-button {{ $day == $selectedDay ? 'btn-selected border-white text-white' : 'btn-orange' }}"
+                                            {{ $this->isDateToday($day) === 'disabled' ? 'disabled' : '' }}>
+                                            {{\Carbon\Carbon::parse($day)->format('l')}}
+                                        </button>
                                     </div>
-                                    <div wire:click="deleteReward({{$reward['id']}})" class="cursor-pointer">
-                                        <i class="text-primary fas fa-backspace fa-lg"></i>
+                                @endforeach
+                            </div>
+                        @endif
+                        @if($selectedDay)
+                            <div>
+                                <label>Add new reward</label>
+                                <div class="d-flex justify-content-between">
+                                    <input wire:keydown.enter="addReward" wire:model="rewardName" name="name"
+                                           class="form-control">
+                                    <button wire:click="addReward"
+                                            class="reward-modal-button btn btn-sm ml-2 bg-blue-custom btn-hover text-white">
+                                        Add
+                                    </button>
+                                </div>
+                                <div class="d-flex flex-column mt-3">
+                                    <label for="rewardImage">Upload image</label>
+                                    <div class="upload-container ">
+                                        <input type="file" wire:model="rewardImage" id="rewardImage"
+                                               class="file-input">
+                                        @error('rewardImage') <span class="error">{{ $message }}</span> @enderror
+                                        {{--todo FIX TEMPROARY URL EXCEPTION--}}
+                                        <div class="">
+                                            @if($rewardImage?->temporaryUrl())
+                                            <img src="{{ $rewardImage?->temporaryUrl() }}" id="previewImage"
+                                                 alt="Preview"
+                                                 class="mt-2">
+                                            @else
+                                        </div>
                                     </div>
                                 </div>
-                            @empty
-                                No planned rewards...
-                            @endforelse
-                        </div>
-                        <label>Add new reward</label>
-                        <div class="d-flex justify-content-between">
-                            <input wire:keydown.enter="addReward" wire:model="rewardName" name="name"
-                                   class="form-control">
-                            <button wire:click="addReward" class="btn btn-sm ml-2 bg-blue-custom btn-hover text-white">Add
-                            </button>
+                            </div>
+
+                        @endif
+                    </div>
+
+                </div>
+                @if($selectedDay || $this->rewards)
+                    <div>
+                        <div class="modal-body">
+                            <div id="rewards"
+                                 class="d-flex flex-column pb-3 border-bottom border-top reward-scrollbar {{ count($rewards) >= 4 ? 'pr-2' : '' }}">
+                                @forelse($rewards as $reward)
+                                    <div
+                                        class="d-flex justify-content-between text-black-50 bg-light-gray p-3 mt-3 rounded pb-2">
+                                        <div class="d-flex flex-column">
+                                            <div>
+                                                <strong class="text-orange">
+                                                    {{ \Carbon\Carbon::parse($reward['date'])->format('l d-m') }}       </strong>
+                                            </div>
+                                            <div>
+                                                <strong>{{$reward['name']}}</strong>
+                                            </div>
+                                        </div>
+                                        <div wire:click="deleteReward({{$reward['id']}})" class="cursor-pointer">
+                                            <i class="fas fa-backspace text-orange fa-lg"></i>
+                                        </div>
+                                    </div>
+                                @empty
+                                    No planned rewards...
+                                @endforelse
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary btn-hover" data-dismiss="modal">Close</button>
-                    </div>
+
+                @endif
+                <div class="w-100 d-flex justify-content-end pb-3 pr-3 ">
+                    <button class="btn-confirm btn" wire:click="closeModal">Done</button>
                 </div>
             </div>
         </div>
