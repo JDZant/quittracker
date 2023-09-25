@@ -5,12 +5,16 @@ namespace App\Http\Livewire\Modals;
 use App\Models\Reward;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AddRewardModal extends Component
 {
+    use WithFileUploads;
+
     public string $date;
     public array $daysOfWeek;
     public $selectedDay;
+    public $rewardImage;
     public string $message;
     public string $rewardName;
     public int $quitAttemptId;
@@ -68,16 +72,28 @@ class AddRewardModal extends Component
 
     public function addReward(): void
     {
+        $this->validate([
+            'rewardName' => 'required|string|max:255',
+            'rewardImage' => 'nullable|image|max:2048',
+        ]);
+
         if ($this->rewardName && $this->quitAttemptId && $this->selectedDay) {
             $newReward = Reward::create([
                 'name' => $this->rewardName,
                 'quit_attempt_id' => $this->quitAttemptId,
-                'date' => Carbon::parse($this->date)->format('Y-m-d')
+                'date' => Carbon::parse($this->selectedDay)->format('Y-m-d')
             ]);
+
+            if ($this->rewardImage) {
+                $newReward->addMedia($this->rewardImage->getRealPath())->toMediaCollection('rewards');
+            }
+
             $this->rewards[] = $newReward;
         }
+
         $this->rewardName = '';
     }
+
 
     public function deleteReward(int $id): void
     {

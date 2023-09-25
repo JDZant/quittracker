@@ -38,7 +38,24 @@
                                         Add
                                     </button>
                                 </div>
+                                <div class="d-flex flex-column mt-3">
+                                    <label for="rewardImage">Upload image</label>
+                                    <div class="upload-container ">
+                                        <input type="file" wire:model="rewardImage" id="rewardImage"
+                                               class="file-input">
+                                        @error('rewardImage') <span class="error">{{ $message }}</span> @enderror
+                                        {{--todo FIX TEMPROARY URL EXCEPTION--}}
+                                        <div class="">
+                                            @if($rewardImage?->temporaryUrl())
+                                            <img src="{{ $rewardImage?->temporaryUrl() }}" id="previewImage"
+                                                 alt="Preview"
+                                                 class="mt-2">
+                                            @else
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         @endif
                     </div>
 
