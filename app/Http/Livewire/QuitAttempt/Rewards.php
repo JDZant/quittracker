@@ -83,12 +83,15 @@ class Rewards extends Component
             $message = 'Select a day to add a reward';
             $rewards = Reward::whereQuitAttemptId($this->quitAttempt->id)
                 ->whereBetween('date', [$startOfWeek->toDateString(), $endOfWeek->toDateString()])
-                ->get();
+                ->get()
+                ->pluck('id')->toArray();
         }
 
         $formattedDate = $dateObj->toDateString();
 
         $this->emit('set-modal', $message, $formattedDate, $this->quitAttempt->id, $rewards);
+
+
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application

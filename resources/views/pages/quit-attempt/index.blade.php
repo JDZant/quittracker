@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
-    <div class="row justify-content-start">
+    <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="mt-3">
                 @if (session('success'))

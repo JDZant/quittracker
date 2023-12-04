@@ -6,18 +6,18 @@
          aria-hidden="true"
          style="background: rgba(0,0,0,0.5);">
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="p-3">
                     <div class="d-flex flex-column w-100">
                         <div class="d-flex justify-content-between">
-                            <h5 class="modal-title" id="failModalLabel">{{ $message }}</h5>
+                            <h5 class="modal-title pb-3" id="failModalLabel">{{ $message }}</h5>
                         </div>
                         @if($daysOfWeek)
-                            <div class="row p-3">
+                            <div class="row">
                                 @foreach($daysOfWeek as $day)
                                     <div
-                                        class="{{ \Carbon\Carbon::parse($day)->week === \Carbon\Carbon::now()->week ? 'col-md-3' : 'col-md-3' }} {{  $this->isDateToday($day) }}  p-1 ">
+                                        class="col-md-3 {{  $this->isDateToday($day) }} pb-2">
                                         <button wire:click="setSelectedDay('{{$day}}')"
                                                 class="btn date-button {{ $day == $selectedDay ? 'btn-selected border-white text-white' : 'btn-orange' }}"
                                             {{ $this->isDateToday($day) === 'disabled' ? 'disabled' : '' }}>
@@ -38,27 +38,27 @@
                                         Add
                                     </button>
                                 </div>
-                                <div class="d-flex flex-column mt-3">
-                                    <label for="rewardImage">Upload image</label>
-                                    <div class="upload-container ">
+                                <div class="d-flex border-top pt-3 pb-3 justify-content-between  mt-3">
+                                    <div class="w-75 mr-3 mt-3">
+                                        <label for="rewardImage">Upload picture of your reward!</label>
                                         <input type="file" wire:model="rewardImage" id="rewardImage"
                                                class="file-input">
-                                        @error('rewardImage') <span class="error">{{ $message }}</span> @enderror
-                                        {{--todo FIX TEMPROARY URL EXCEPTION--}}
-                                        <div class="">
-                                            @if($rewardImage?->temporaryUrl())
-                                            <img src="{{ $rewardImage?->temporaryUrl() }}" id="previewImage"
-                                                 alt="Preview"
-                                                 class="mt-2">
-                                            @else
+                                    </div>
+                                    <div class="text-center w-25 preview-image-container ml-3">
+                                        <div class="d-flex flex-column">
+                                            @if($rewardImagePreview)
+                                                <div wire:click="removeImage">
+                                                    <h5><i class="fas fa-window-close"></i></h5>
+                                                </div>
+                                                <img src="{{ $rewardImagePreview }}" id="previewImage" alt="Preview">
+                                            @endif
+                                            @error('rewardImage') <span class="error">{{ $message }}</span> @enderror
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         @endif
                     </div>
-
                 </div>
                 @if($selectedDay || $this->rewards)
                     <div>
@@ -71,19 +71,30 @@
                                         <div class="d-flex flex-column">
                                             <div>
                                                 <strong class="text-orange">
-                                                    {{ \Carbon\Carbon::parse($reward['date'])->format('l d-m') }}       </strong>
+                                                    {{ \Carbon\Carbon::parse($reward->date)->format('l d-m') }}
+                                                </strong>
                                             </div>
-                                            <div>
-                                                <strong>{{$reward['name']}}</strong>
-                                            </div>
+                                            <strong>{{$reward->name}}</strong>
                                         </div>
-                                        <div wire:click="deleteReward({{$reward['id']}})" class="cursor-pointer">
-                                            <i class="fas fa-backspace text-orange fa-lg"></i>
+                                        <div class="d-flex justify-content-between">
+                                            @if($reward->hasMedia('rewards'))
+                                                <div class="image-container mr-3">
+                                                    <img src="{{ $reward->getFirstMedia('rewards')->getUrl() }}"
+                                                         alt="{{ $reward->name }}">
+                                                </div>
+                                            @endif
+
+                                            <div wire:click="deleteReward({{$reward->id}})" class="cursor-pointer">
+                                                <i class="fas fa-backspace text-orange fa-lg"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 @empty
-                                    No planned rewards...
+                                    <div class="mt-3">
+                                        No planned rewards...
+                                    </div>
                                 @endforelse
+
                             </div>
                         </div>
                     </div>

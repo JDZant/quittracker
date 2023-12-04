@@ -6,20 +6,26 @@ use App\Models\Reward;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Masmerise\Toaster\Toastable;
+use Masmerise\Toaster\Toaster;
 
 class AddRewardModal extends Component
 {
+
     use WithFileUploads;
 
     public string $date;
     public array $daysOfWeek;
     public $selectedDay;
-    public $rewardImage;
     public string $message;
     public string $rewardName;
     public int $quitAttemptId;
-    public array $rewards = [];
+    public $rewards;
     public bool $showModal = false;
+    public $rewardImage;
+    public $rewardImagePreview;
+
+    //TODO SET REWARDS AS COLLECTION NOT AN ARRAY FOR SPATIE MEDIA LIBRARY
 
     protected $listeners = [
         'set-modal' => 'setModal'
@@ -30,10 +36,27 @@ class AddRewardModal extends Component
         $this->date = $date;
         $this->message = $message;
         $this->quitAttemptId = $quitAttemptId;
-        $this->rewards = $rewards;
+        $this->rewards = Reward::whereIn('id', $rewards)->get();
         $this->showModal = true;
         $this->setDaysOfWeek();
     }
+
+    public function updatedRewardImage(): void
+    {
+        $this->rewardImagePreview = $this->getBase64ImageString();
+    }
+
+    public function removeImage(): void
+    {
+        $this->rewardImagePreview = null; // Remove/reset the image preview
+        $this->rewardImage = null; // Also, reset the associated image variable if necessary
+    }
+
+    public function getBase64ImageString(): string
+    {
+        return 'data:image/png;base64,' . base64_encode(file_get_contents($this->rewardImage->getRealPath()));
+    }
+
 
     //TODO this is quickfix. SelectedDay and should be stored in the same variable
     public function setSelectedDay($day) {
@@ -74,7 +97,7 @@ class AddRewardModal extends Component
     {
         $this->validate([
             'rewardName' => 'required|string|max:255',
-            'rewardImage' => 'nullable|image|max:2048',
+            'rewardImage' => 'nullable|image|max:5048',
         ]);
 
         if ($this->rewardName && $this->quitAttemptId && $this->selectedDay) {
@@ -92,16 +115,19 @@ class AddRewardModal extends Component
         }
 
         $this->rewardName = '';
-    }
+        Toaster::success('Reward added!');
 
+    }
 
     public function deleteReward(int $id): void
     {
         Reward::find($id)->delete();
-        $this->rewards = array_values(array_filter($this->rewards, function($reward) use ($id) {
-            return $reward['id'] !== $id;
-        }));
+
+        $this->rewards = $this->rewards->filter(function($reward) use ($id) {
+            return $reward->id !== $id;
+        });
     }
+
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
