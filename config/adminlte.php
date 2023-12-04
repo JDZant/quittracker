@@ -186,7 +186,7 @@ return [
     |
     */
 
-    'classes_body' => '',
+    'classes_body' => 'content',
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
@@ -294,24 +294,17 @@ return [
             'header' => 'Personal',
         ],
         [
-            'text' => 'Active Attempt',
+            'text' => 'Home',
             'url' => 'current-attempt',
             'icon' => 'fas fa-smoking-ban',
-            'submenu' => [
-                [
-                    'text' => 'My stats',
-                    'url' => "current-attempt",
-                    'icon' => 'fas fa-info-circle',
-                ],
-                [
-                    'text' => 'Rewards',
-                    'url' => "rewards",
-                    'icon' => 'fas fa-gift',
-                ],
-            ]
         ],
         [
             'header' => 'Settings',
+        ],
+        [
+            'text' => 'Rewards',
+            'url' => "rewards",
+            'icon' => 'fas fa-gift',
         ],
         [
             'text' => 'My attempts',
