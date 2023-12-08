@@ -4,27 +4,31 @@
     <div class="container mt-3">
         @if ($activeAttempt)
             <!-- Reward Section -->
-            @if ($nextReward)
-                <div class="row">
-                    <div class="col-12">
-                        @if ($nextReward->date === \Carbon\Carbon::now()->format('Y-m-d'))
-                            <div class="alert alert-success" role="alert">
-                                <h1>Congratulations! You have earned a reward!</h1>
-                                <p>Your progress bar reached 100%!</p>
+            @if($nextReward)
+                <div class="d-flex flex-column w-100">
+                    @if($nextReward->date === \Carbon\Carbon::now()->format('Y-m-d'))
+                        <div class="d-flex flex-column">
+                            <div class="d-flex justify-content-between">
+                                <h1 class="text-orange">Congratulations! You have earned a reward!</h1>
                                 <button data-target="#claimReward" data-toggle="modal"
-                                        class="btn btn-warning btn-lg">Claim reward
+                                        class="btn-gold rounded btn btn-lg text-white">Claim reward
                                 </button>
                             </div>
-                        @else
-                            <h3 class="text-warning">{{ $daysLeft }} days left until you can reward yourself with
-                                "<strong>{{ $nextReward?->name }}</strong>"</h3>
-                            <h4>Progress</h4>
-                        @endif
-                        <div class="progress mb-3">
-                            <div class="progress-bar bg-warning" role="progressbar"
-                                 style="width: {{ $progress }}%"
-                                 aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">{{ $progress }}%
-                            </div>
+                            <h3>Your progress bar reached 100%!</h3>
+                        </div>
+                    @else
+                        <h3>{{ $daysLeft }} days left until you can reward yourself with
+                            "<strong>{{ $nextReward?->name }}</strong>"</h3>
+                        <h4>Progress</h4>
+                    @endif
+                    <div class="progress d-flex w-100" style="height: 1.5rem;!important">
+                        <div class="bg-orange text-white progress-bar progress-bar-striped"
+                             role="progressbar"
+                             style=" width:{{ $progress . '%' }}"
+                             aria-valuenow="25"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                            {{ $progress }}%
                         </div>
                     </div>
                 </div>
@@ -39,7 +43,7 @@
                             <h5>Current attempt</h5>
                         </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table table-striped table-bordered">
                                 <tr>
                                     <td>Haven't smoked since</td>
                                     <td>{{ $activeAttempt->formatted_start_date }}</td>
@@ -88,16 +92,29 @@
                             <h5>Smoking profile</h5>
                         </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table table-striped table-bordered">
+                                <tbody>
                                 <tr>
                                     <td>Cigarettes Per day</td>
                                     <td>{{ $activeAttempt->smokingData->cigarettes_per_day }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Nicotine per cigarette (mg)</td>
+                                    <td>Nicotine per cigarrette (mg)</td>
                                     <td>{{ $activeAttempt->smokingData->nicotine_per_cigarette }}</td>
                                 </tr>
-                                <!-- ... more rows ... -->
+                                <tr>
+                                    <td>Tar per cigarrette (mg)</td>
+                                    <td>{{ $activeAttempt->smokingData->tar_per_cigarette }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Cigarette per pack</td>
+                                    <td>{{ $activeAttempt->smokingData->cigarettes_per_pack }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Cost per pack (€)</td>
+                                    <td>{{ $activeAttempt->smokingData->cost_per_pack }}</td>
+                                </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -110,7 +127,7 @@
                             <h5>Smoking statistics</h5>
                         </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table table-striped table-bordered">
                                 <tbody>
                                 <tr>
                                     <td>Cigarettes not smoked since</td>
@@ -136,9 +153,12 @@
                             </table>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#failModal">I
-                        failed
-                    </button>
+                    <div class="">
+                        <button type="button" class="btn btn-orange mt-3 col-md-3 offset-md-9" data-toggle="modal"
+                                data-target="#failModal">I
+                            failed
+                        </button>
+                    </div>
                 </div>
             </div>
             <!-- Include Modals -->
