@@ -30,14 +30,14 @@
                         </div>
 
                         <!-- Email Notifications Toggle -->
-                        <div class="form-group">
+                        <div class="form-group bg-danger">
                             <div class="custom-control custom-switch">
                                 <input type="hidden" name="email_notifications" value="0">
-                                <input type="checkbox" class="custom-control-input" id="email_notifications"
+                                <input type="checkbox" class="custom-control-input ml-3" id="email_notifications"
                                        name="email_notifications" value="1"
                                        @if($user->notificationSettings?->email_notifications) checked @endif>
                                 <label class="custom-control-label"
-                                       for="email_notifications">{{ __('Enable Email Notifications') }}</label>
+                                       for="email_notifications">{{ __('notifications.labels.enable_notifications') }}</label>
                             </div>
                         </div>
 
@@ -48,15 +48,15 @@
                                     name="frequency" required>
                                 <option value="daily"
                                         @if ($user->notificationSettings?->frequency  === 'daily') selected @endif>
-                                    Daily
+                                    {{ __('notifications.selects.daily') }}
                                 </option>
                                 <option value="weekly"
                                         @if ($user->notificationSettings?->frequency === 'weekly') selected @endif>
-                                    Weekly
+                                    {{ __('notifications.selects.weekly') }}
                                 </option>
                                 <option value="monthly"
                                         @if ($user->notificationSettings?->frequency === 'monthly') selected @endif>
-                                    Monthly
+                                    {{ __('notifications.selects.monthly') }}
                                 </option>
                             </select>
 
@@ -68,7 +68,7 @@
                         </div>
                         <div class="w-100 d-flex justify-content-end">
                             <button type="submit" class="btn btn-orange">
-                                {{ __('Save') }}
+                                {{ __('notifications.buttons.save') }}
                             </button>
                         </div>
                     </form>

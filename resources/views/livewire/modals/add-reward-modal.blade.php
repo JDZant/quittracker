@@ -29,7 +29,7 @@
                         @endif
                         @if($selectedDay)
                             <div>
-                                <label>Add new reward</label>
+                                <label>{{ __('add-rewards-modals') }}</label>
                                 <div class="d-flex justify-content-between">
                                     <input wire:keydown.enter="addReward" wire:model="rewardName" name="name"
                                            class="form-control">

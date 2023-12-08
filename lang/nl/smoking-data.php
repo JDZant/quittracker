@@ -1,26 +1,27 @@
 <?php
 
 return [
-    'title' => 'Smoking Data',
-    'header' => 'Please provide information about your smoking habits',
+    'title' => 'Rookgegevens',
+    'header' => 'Geef informatie over uw rookgewoonten',
     'forms' => [
-        'cigarettes_per_day' => 'Cigarettes smoked per day',
-        'cigarettes_per_pack' => 'Cigarettes per pack',
-        'packs_per_day' => 'Packs per day',
-        'cost_per_pack' => 'Cost per pack',
-        'nicotine_per_cigarette' => 'Nicotine per cigarette',
-        'tar_per_cigarette' => 'Tar per cigarette',
+        'cigarettes_per_day' => 'Gerookte sigaretten per dag',
+        'cigarettes_per_pack' => 'Sigaretten per pakje',
+        'packs_per_day' => 'Pakjes per dag',
+        'cost_per_pack' => 'Kosten per pakje',
+        'nicotine_per_cigarette' => 'Nicotine per sigaret',
+        'tar_per_cigarette' => 'Teer per sigaret',
     ],
     'buttons' => [
-        'save' => 'Save',
-        'cancel' => 'Cancel',
+        'save' => 'Opslaan',
+        'cancel' => 'Annuleren',
     ],
     'table' => [
-        'cigarettes_per_day' => 'Cigarettes per day',
-        'cigarettes_per_pack' => 'Cigarettes per pack',
-        'packs_per_day' => 'Packs per day',
-        'years_smoked' => 'Years smoked',
-        'cost_per_pack' => 'Cost per pack',
-        'actions' => 'Actions',
+        'cigarettes_per_day' => 'Sigaretten per dag',
+        'cigarettes_per_pack' => 'Sigaretten per pakje',
+        'packs_per_day' => 'Pakjes per dag',
+        'years_smoked' => 'Jaren gerookt',
+        'cost_per_pack' => 'Kosten per pakje',
+        'actions' => 'Acties',
     ],
 ];
+

@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'header' => 'Please add your motivation',
+    'header' => 'Voeg uw motivatie toe',
     'forms' => [
-        'reason' => 'Reason I want to stop',
+        'reason' => 'Reden waarom ik wil stoppen',
     ],
     'buttons' => [
-        'add' => '+ Add reason',
-        'done' => 'Done'
+        'add' => '+ Reden toevoegen',
+        'done' => 'Klaar'
     ],
 ];
